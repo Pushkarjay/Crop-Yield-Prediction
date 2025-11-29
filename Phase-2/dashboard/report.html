@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📑 Quick View - Crop Yield Prediction Report</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Report/Presentation Specific Styles */
+        :root {
+            --slide-bg: #ffffff;
+            --slide-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+        }
+        
+        .report-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .report-nav .logo {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        
+        .report-nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .report-nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .report-nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .report-nav-links a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .report-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+        
+        /* Slide Styles */
+        .slide {
+            background: var(--slide-bg);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: var(--slide-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light), #4fc3f7);
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* Title Slide */
+        .slide.title-slide {
+            text-align: center;
+            padding: 80px 50px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .slide.title-slide::before {
+            display: none;
+        }
+        
+        .slide.title-slide h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .slide.title-slide .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .slide.title-slide .meta {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-item .value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .meta-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Content Slides */
+        .slide h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .slide h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 20px 0 10px;
+        }
+        
+        .slide p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 25px 15px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .stat-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+        
+        /* Plot Image */
+        .plot-container {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .plot-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .plot-caption {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feature-list li.good {
+            border-left-color: #4caf50;
+        }
+        
+        .feature-list li.partial {
+            border-left-color: #ffc107;
+        }
+        
+        .feature-list li.contextual {
+            border-left-color: #78909c;
+        }
+        
+        .feature-list .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .badge.good {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .badge.partial {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+        
+        .badge.contextual {
+            background: #eceff1;
+            color: #546e7a;
+        }
+        
+        /* Model Comparison */
+        .model-comparison {
+            margin: 25px 0;
+        }
+        
+        .model-row {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+        }
+        
+        .model-row.winner {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+            border-color: #4caf50;
+        }
+        
+        .model-row .rank {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+        
+        .model-row.winner .rank {
+            background: #4caf50;
+        }
+        
+        .model-row .name {
+            flex: 1;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .model-row .metrics {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .model-row .metric {
+            text-align: center;
+        }
+        
+        .model-row .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .model-row.winner .metric-value {
+            color: #4caf50;
+        }
+        
+        .model-row .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Workflow */
+        .workflow-visual {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .workflow-step {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .workflow-step .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 10px;
+        }
+        
+        .workflow-step .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .workflow-arrow {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        /* Data Quality Summary */
+        .quality-bars {
+            margin: 25px 0;
+        }
+        
+        .quality-bar {
+            margin-bottom: 15px;
+        }
+        
+        .quality-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .quality-bar-track {
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .quality-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        
+        .quality-bar-fill.good {
+            background: linear-gradient(90deg, #4caf50, #81c784);
+        }
+        
+        .quality-bar-fill.partial {
+            background: linear-gradient(90deg, #ffc107, #ffca28);
+        }
+        
+        /* Footer */
+        .report-footer {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            .slide.title-slide h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .model-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .model-row .rank {
+                margin: 0 0 10px 0;
+            }
+            
+            .model-row .metrics {
+                margin-top: 15px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .report-nav {
+                display: none;
+            }
+            
+            .slide {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="report-nav">
+        <div class="logo">
+            <span class="logo-icon">🌾</span>
+            <span>Crop Yield Prediction</span>
+        </div>
+        <div class="report-nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="technical.html">Technical Docs</a>
+            <a href="report.html" class="active">Quick View</a>
+        </div>
+    </nav>
+
+    <div class="report-container">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide">
+            <h1>🌾 Crop Yield Prediction</h1>
+            <p class="subtitle">AI-Powered Agricultural Yield Forecasting System</p>
+            <p>Machine Learning Project Report - Phase 2</p>
+            <p style="margin-top: 15px; font-size: 1.1rem;">By <strong>Pushkarjay Ajay</strong></p>
+            
+            <div class="meta">
+                <div class="meta-item">
+                    <div class="value">7,109</div>
+                    <div class="label">Data Samples</div>
+                </div>
+                <div class="meta-item">
+                    <div class="value">12</div>
+                    <div class="label">Features</div>
+                </div>
+                <div class="meta-item">
+                    <div class="value">97.5%</div>
+                    <div class="label">R² Accuracy</div>
+                </div>
+                <div class="meta-item">
+                    <div class="value">5</div>
+                    <div class="label">Models Tested</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Project Overview -->
+        <div class="slide">
+            <span class="slide-number">1</span>
+            <h2>📋 Project Overview</h2>
+            <p>
+                An end-to-end machine learning system that predicts crop yield based on environmental conditions,
+                soil properties, and farm management practices. The system integrates multiple datasets, 
+                performs intelligent feature engineering, and serves predictions via a REST API.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="value">3</div>
+                    <div class="label">Source Datasets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🔧</div>
+                    <div class="value">12</div>
+                    <div class="label">ML Features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🤖</div>
+                    <div class="value">5</div>
+                    <div class="label">Models Trained</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🎯</div>
+                    <div class="value">97.5%</div>
+                    <div class="label">Best R² Score</div>
+                </div>
+            </div>
+            
+            <h3>ML Pipeline Workflow</h3>
+            <div class="workflow-visual">
+                <div class="workflow-step">
+                    <div class="icon">📥</div>
+                    <div class="label">Data Collection</div>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <div class="icon">🔄</div>
+                    <div class="label">Preprocessing</div>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <div class="icon">⚙️</div>
+                    <div class="label">Feature Engineering</div>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <div class="icon">🤖</div>
+                    <div class="label">Model Training</div>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <div class="icon">🚀</div>
+                    <div class="label">API Deployment</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Data Analysis - Yield Distribution -->
+        <div class="slide">
+            <span class="slide-number">2</span>
+            <h2>📈 Yield Distribution Analysis</h2>
+            <p>
+                Distribution of crop yields across the unified dataset shows a right-skewed pattern,
+                with most yields concentrated between 200-800 kg/hectare.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/01_yield_distribution.png" alt="Yield Distribution">
+                <div class="plot-caption">
+                    <strong>Figure 1:</strong> Histogram showing the distribution of crop yields. 
+                    Mean yield: ~636 kg/ha | Median: ~580 kg/ha
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Correlation Matrix -->
+        <div class="slide">
+            <span class="slide-number">3</span>
+            <h2>🔗 Feature Correlations</h2>
+            <p>
+                Correlation analysis reveals key relationships between features and yield.
+                Fertilizer amount and irrigation schedule show strongest positive correlations.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/02_correlation_matrix.png" alt="Correlation Matrix">
+                <div class="plot-caption">
+                    <strong>Figure 2:</strong> Correlation heatmap of all numerical features.
+                    Darker colors indicate stronger correlations.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Crop Comparison -->
+        <div class="slide">
+            <span class="slide-number">4</span>
+            <h2>🌾 Yield by Crop Type</h2>
+            <p>
+                Comparison of average yields across different crop types reveals significant variations.
+                Sugarcane shows highest yields while pulses show lowest.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/03_crop_yield_comparison.png" alt="Crop Yield Comparison">
+                <div class="plot-caption">
+                    <strong>Figure 3:</strong> Box plot comparing yield distributions across crop types.
+                    Sugarcane leads with highest average yield.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: State Comparison -->
+        <div class="slide">
+            <span class="slide-number">5</span>
+            <h2>📍 Yield by State</h2>
+            <p>
+                Regional analysis shows yield variations across Indian states.
+                Punjab and Haryana show consistently higher yields due to better irrigation infrastructure.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/04_state_yield_comparison.png" alt="State Yield Comparison">
+                <div class="plot-caption">
+                    <strong>Figure 4:</strong> Average crop yields by state. 
+                    Northern states show higher yields on average.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Weather & Soil Impact -->
+        <div class="slide">
+            <span class="slide-number">6</span>
+            <h2>🌤️ Weather & Soil Impact</h2>
+            <p>
+                Scatter plots reveal the relationship between key environmental factors and crop yield.
+                Optimal ranges exist for each parameter.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/05_weather_soil_yield.png" alt="Weather and Soil vs Yield">
+                <div class="plot-caption">
+                    <strong>Figure 5:</strong> Multi-panel scatter plots showing how weather and soil 
+                    parameters influence crop yield.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Feature Importance -->
+        <div class="slide">
+            <span class="slide-number">7</span>
+            <h2>⭐ Feature Importance</h2>
+            <p>
+                Gradient Boosting model reveals the relative importance of each feature in predicting yield.
+                Fertilizer amount and rainfall are the most influential predictors.
+            </p>
+            
+            <div class="plot-container">
+                <img src="../plots/06_feature_importance.png" alt="Feature Importance">
+                <div class="plot-caption">
+                    <strong>Figure 6:</strong> Feature importance scores from the Gradient Boosting model.
+                    Top features: Fertilizer, Rainfall, Temperature.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Data Quality -->
+        <div class="slide">
+            <span class="slide-number">8</span>
+            <h2>📊 Data Quality Status</h2>
+            <p>
+                Understanding data availability is crucial for interpreting predictions.
+                Features are categorized by training data coverage.
+            </p>
+            
+            <div class="two-col">
+                <div>
+                    <h3>🟢 Good Data (3000+ samples)</h3>
+                    <ul class="feature-list">
+                        <li class="good">Rainfall_mm <span class="badge good">7,099</span></li>
+                        <li class="good">Fertilizer_Amount <span class="badge good">4,099</span></li>
+                        <li class="good">Sunshine_hours <span class="badge good">4,000</span></li>
+                        <li class="good">Soil_Quality <span class="badge good">4,000</span></li>
+                        <li class="good">Irrigation_Schedule <span class="badge good">4,000</span></li>
+                        <li class="good">Seed_Variety <span class="badge good">4,000</span></li>
+                        <li class="good">Temperature_C <span class="badge good">3,099</span></li>
+                        <li class="good">Humidity <span class="badge good">3,000</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🟡 Partial Data (imputed)</h3>
+                    <ul class="feature-list">
+                        <li class="partial">Nitrogen <span class="badge partial">2,299</span></li>
+                        <li class="partial">Phosphorus <span class="badge partial">2,299</span></li>
+                        <li class="partial">Potassium <span class="badge partial">2,299</span></li>
+                        <li class="partial">Soil_Humidity <span class="badge partial">800</span></li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 25px;">⚪ Contextual Only</h3>
+                    <ul class="feature-list">
+                        <li class="contextual">crop_type <span class="badge contextual">Display</span></li>
+                        <li class="contextual">state <span class="badge contextual">Display</span></li>
+                        <li class="contextual">farm_area <span class="badge contextual">Calc</span></li>
+                        <li class="contextual">coordinates <span class="badge contextual">Future</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Data Coverage by Feature</h3>
+            <div class="quality-bars">
+                <div class="quality-bar">
+                    <div class="quality-bar-header">
+                        <span>Rainfall_mm</span>
+                        <span>99.9%</span>
+                    </div>
+                    <div class="quality-bar-track">
+                        <div class="quality-bar-fill good" style="width: 99.9%"></div>
+                    </div>
+                </div>
+                <div class="quality-bar">
+                    <div class="quality-bar-header">
+                        <span>Fertilizer_Amount</span>
+                        <span>57.7%</span>
+                    </div>
+                    <div class="quality-bar-track">
+                        <div class="quality-bar-fill good" style="width: 57.7%"></div>
+                    </div>
+                </div>
+                <div class="quality-bar">
+                    <div class="quality-bar-header">
+                        <span>N/P/K Nutrients</span>
+                        <span>32.3%</span>
+                    </div>
+                    <div class="quality-bar-track">
+                        <div class="quality-bar-fill partial" style="width: 32.3%"></div>
+                    </div>
+                </div>
+                <div class="quality-bar">
+                    <div class="quality-bar-header">
+                        <span>Soil_Humidity</span>
+                        <span>11.3%</span>
+                    </div>
+                    <div class="quality-bar-track">
+                        <div class="quality-bar-fill partial" style="width: 11.3%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Model Comparison -->
+        <div class="slide">
+            <span class="slide-number">9</span>
+            <h2>🤖 Model Comparison</h2>
+            <p>
+                Five regression algorithms were trained and evaluated. Gradient Boosting achieved
+                the best performance across all metrics.
+            </p>
+            
+            <div class="model-comparison">
+                <div class="model-row winner">
+                    <div class="rank">1</div>
+                    <div class="name">🏆 Gradient Boosting</div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">0.9750</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">37.72</div>
+                            <div class="metric-label">MAE</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">52.20</div>
+                            <div class="metric-label">RMSE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-row">
+                    <div class="rank">2</div>
+                    <div class="name">Random Forest</div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">0.9680</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">42.15</div>
+                            <div class="metric-label">MAE</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">58.90</div>
+                            <div class="metric-label">RMSE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-row">
+                    <div class="rank">3</div>
+                    <div class="name">XGBoost</div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">0.9620</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">45.80</div>
+                            <div class="metric-label">MAE</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">64.20</div>
+                            <div class="metric-label">RMSE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-row">
+                    <div class="rank">4</div>
+                    <div class="name">Support Vector Regression</div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">0.8950</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">78.30</div>
+                            <div class="metric-label">MAE</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">106.50</div>
+                            <div class="metric-label">RMSE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-row">
+                    <div class="rank">5</div>
+                    <div class="name">Linear Regression</div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">0.7820</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">112.40</div>
+                            <div class="metric-label">MAE</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">153.80</div>
+                            <div class="metric-label">RMSE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Tech Stack -->
+        <div class="slide">
+            <span class="slide-number">10</span>
+            <h2>🛠️ Technology Stack</h2>
+            
+            <div class="two-col">
+                <div>
+                    <h3>Backend & ML</h3>
+                    <ul class="feature-list">
+                        <li>Python 3.11 <span class="badge good">Core</span></li>
+                        <li>scikit-learn <span class="badge good">ML</span></li>
+                        <li>pandas & numpy <span class="badge good">Data</span></li>
+                        <li>Flask <span class="badge good">API</span></li>
+                        <li>joblib <span class="badge good">Model I/O</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Frontend & Viz</h3>
+                    <ul class="feature-list">
+                        <li>HTML5 / CSS3 <span class="badge good">UI</span></li>
+                        <li>JavaScript (ES6+) <span class="badge good">Logic</span></li>
+                        <li>matplotlib & seaborn <span class="badge good">Plots</span></li>
+                        <li>Responsive Design <span class="badge good">Mobile</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>API Endpoints</h3>
+            <table class="tech-table" style="margin-top: 15px;">
+                <tr>
+                    <th>Method</th>
+                    <th>Endpoint</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>GET</code></td>
+                    <td><code>/</code></td>
+                    <td>API information</td>
+                </tr>
+                <tr>
+                    <td><code>GET</code></td>
+                    <td><code>/health</code></td>
+                    <td>Health check</td>
+                </tr>
+                <tr>
+                    <td><code>GET</code></td>
+                    <td><code>/features</code></td>
+                    <td>List required features</td>
+                </tr>
+                <tr>
+                    <td><code>POST</code></td>
+                    <td><code>/predict</code></td>
+                    <td>Single prediction</td>
+                </tr>
+                <tr>
+                    <td><code>POST</code></td>
+                    <td><code>/predict-batch</code></td>
+                    <td>Batch predictions</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 12: Summary -->
+        <div class="slide">
+            <span class="slide-number">11</span>
+            <h2>✅ Summary & Next Steps</h2>
+            
+            <div class="two-col">
+                <div>
+                    <h3>🎯 Achievements</h3>
+                    <ul class="feature-list">
+                        <li class="good">Unified 3 heterogeneous datasets</li>
+                        <li class="good">97.5% prediction accuracy (R²)</li>
+                        <li class="good">REST API with CORS support</li>
+                        <li class="good">Interactive dashboard</li>
+                        <li class="good">Multi-crop comparison</li>
+                        <li class="good">Total production calculator</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>🚀 Future Enhancements</h3>
+                    <ul class="feature-list">
+                        <li class="partial">Add crop type as ML feature</li>
+                        <li class="partial">Include seasonal patterns</li>
+                        <li class="partial">Geo-spatial predictions</li>
+                        <li class="partial">Weather API integration</li>
+                        <li class="partial">Mobile app development</li>
+                        <li class="partial">Cloud deployment</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 12px; color: white;">
+                <h3 style="color: white; margin-bottom: 10px;">🌾 Project Complete</h3>
+                <p style="color: rgba(255,255,255,0.9); margin: 0;">
+                    Ready for production deployment and further enhancements
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="report-footer">
+        <p>🌾 Crop Yield Prediction System | Phase-2 | Built with Machine Learning</p>
+        <p>© 2025 Pushkarjay | Powered by Gradient Boosting Algorithm</p>
+    </footer>
+
+</body>
+</html>

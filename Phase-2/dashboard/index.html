@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 Crop Yield Prediction Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="top-nav">
+            <a href="index.html" class="active">🏠 Dashboard</a>
+            <a href="technical.html">📊 Technical Docs</a>
+            <a href="report.html">📑 Quick View</a>
+        </nav>
+
+        <!-- Backend Status Indicator -->
+        <div class="backend-status" id="backendStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span class="status-text" id="statusText">Checking API...</span>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🌾</span>
+                <h1>Crop Yield Prediction</h1>
+            </div>
+            <p class="subtitle">AI-Powered Agricultural Yield Forecasting System</p>
+            <p class="author-credit">By Pushkarjay Ajay</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Form Section -->
+            <section class="form-section">
+                <div class="section-header">
+                    <h2>📊 Enter Crop Parameters</h2>
+                    <p>Fill in the agricultural data to predict crop yield</p>
+                    <button type="button" class="btn btn-info" id="toggleFieldStatus">
+                        <span class="btn-icon">🔍</span>
+                        Show Field Status
+                    </button>
+                </div>
+
+                <!-- Field Status Legend (hidden by default) -->
+                <div class="field-status-legend" id="fieldStatusLegend" style="display: none;">
+                    <h4 style="margin-bottom: 15px; color: var(--primary-color);">📊 Field Data Status</h4>
+                    <div class="legend-item active-field">
+                        <span class="status-dot active"></span>
+                        <div>
+                            <strong>Good Data (3000+ samples)</strong><br>
+                            <small>Rainfall, Temperature, Humidity, Sunshine, Soil Quality, Irrigation, Fertilizer, Seed Variety</small>
+                        </div>
+                    </div>
+                    <div class="legend-item partial-field">
+                        <span class="status-dot partial"></span>
+                        <div>
+                            <strong>Partial Data (800-2300 samples)</strong><br>
+                            <small>Nitrogen, Phosphorus, Potassium, Soil Humidity - values often imputed</small>
+                        </div>
+                    </div>
+                    <div class="legend-item contextual-field">
+                        <span class="status-dot contextual"></span>
+                        <div>
+                            <strong>Contextual Only (No training data)</strong><br>
+                            <small>Crop, State, District, Season, Farm Area, Coordinates, Dates - for display & future use</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="predictionForm" class="prediction-form">
+                    <!-- Weather Parameters - ACTIVE ML FEATURES -->
+                    <div class="form-group-container ml-active-section" data-field-type="active">
+                        <h3 class="group-title">🌤️ Weather Conditions <span class="field-badge active">✓ ML Active</span></h3>
+                        <div class="form-grid">
+                            <div class="form-group good-data-field">
+                                <label for="Rainfall_mm">
+                                    <span class="label-icon">🌧️</span>
+                                    Rainfall (mm) <span class="data-indicator good" title="7099 samples">●</span>
+                                </label>
+                                <input type="number" id="Rainfall_mm" name="Rainfall_mm" 
+                                       placeholder="e.g., 500" min="0" max="3000" step="0.1">
+                                <span class="hint">Annual rainfall in mm (0-3000)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Temperature_C">
+                                    <span class="label-icon">🌡️</span>
+                                    Temperature (°C) <span class="data-indicator good" title="3099 samples">●</span>
+                                </label>
+                                <input type="number" id="Temperature_C" name="Temperature_C" 
+                                       placeholder="e.g., 25" min="0" max="50" step="0.1">
+                                <span class="hint">Average temperature (0-50°C)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Humidity">
+                                    <span class="label-icon">💧</span>
+                                    Humidity (%) <span class="data-indicator good" title="3000 samples">●</span>
+                                </label>
+                                <input type="number" id="Humidity" name="Humidity" 
+                                       placeholder="e.g., 70" min="0" max="100" step="0.1">
+                                <span class="hint">Relative humidity (0-100%)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Sunshine_hours">
+                                    <span class="label-icon">☀️</span>
+                                    Sunshine Hours <span class="data-indicator good" title="4000 samples">●</span>
+                                </label>
+                                <input type="number" id="Sunshine_hours" name="Sunshine_hours" 
+                                       placeholder="e.g., 100" min="0" max="200" step="0.1">
+                                <span class="hint">Daily sunshine hours (0-200)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soil Parameters - MIXED: Good + Partial Data -->
+                    <div class="form-group-container ml-active-section" data-field-type="active">
+                        <h3 class="group-title">🌱 Soil Properties <span class="field-badge active">✓ ML Active</span></h3>
+                        <div class="form-grid">
+                            <div class="form-group good-data-field">
+                                <label for="Soil_Quality">
+                                    <span class="label-icon">🏔️</span>
+                                    Soil Quality <span class="data-indicator good">●</span>
+                                </label>
+                                <input type="number" id="Soil_Quality" name="Soil_Quality" 
+                                       placeholder="e.g., 75" min="0" max="100" step="0.1">
+                                <span class="hint">Quality index (0-100)</span>
+                            </div>
+                            
+                            <div class="form-group partial-data-field">
+                                <label for="Soil_Humidity">
+                                    <span class="label-icon">💦</span>
+                                    Soil Humidity <span class="data-indicator partial" title="800 samples - often imputed">●</span>
+                                </label>
+                                <input type="number" id="Soil_Humidity" name="Soil_Humidity" 
+                                       placeholder="e.g., 60" min="0" max="100" step="0.1">
+                                <span class="hint">Moisture content (0-100)</span>
+                            </div>
+                            
+                            <div class="form-group partial-data-field">
+                                <label for="Nitrogen">
+                                    <span class="label-icon">🧪</span>
+                                    Nitrogen (N) <span class="data-indicator partial" title="2299 samples">●</span>
+                                </label>
+                                <input type="number" id="Nitrogen" name="Nitrogen" 
+                                       placeholder="e.g., 40" min="0" max="200" step="0.1">
+                                <span class="hint">Nitrogen content (0-200)</span>
+                            </div>
+                            
+                            <div class="form-group partial-data-field">
+                                <label for="Phosphorus">
+                                    <span class="label-icon">🧪</span>
+                                    Phosphorus (P) <span class="data-indicator partial" title="2299 samples">●</span>
+                                </label>
+                                <input type="number" id="Phosphorus" name="Phosphorus" 
+                                       placeholder="e.g., 50" min="0" max="200" step="0.1">
+                                <span class="hint">Phosphorus content (0-200)</span>
+                            </div>
+                            
+                            <div class="form-group partial-data-field">
+                                <label for="Potassium">
+                                    <span class="label-icon">🧪</span>
+                                    Potassium (K) <span class="data-indicator partial" title="2299 samples">●</span>
+                                </label>
+                                <input type="number" id="Potassium" name="Potassium" 
+                                       placeholder="e.g., 30" min="0" max="300" step="0.1">
+                                <span class="hint">Potassium content (0-300)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Management Parameters - ACTIVE ML FEATURES -->
+                    <div class="form-group-container ml-active-section" data-field-type="active">
+                        <h3 class="group-title">🚜 Farm Management <span class="field-badge active">✓ ML Active</span></h3>
+                        <div class="form-grid">
+                            <div class="form-group good-data-field">
+                                <label for="Fertilizer_Amount_kg_per_hectare">
+                                    <span class="label-icon">🧴</span>
+                                    Fertilizer (kg/ha) <span class="data-indicator good" title="4099 samples">●</span>
+                                </label>
+                                <input type="number" id="Fertilizer_Amount_kg_per_hectare" 
+                                       name="Fertilizer_Amount_kg_per_hectare" 
+                                       placeholder="e.g., 150" min="0" max="500" step="0.1">
+                                <span class="hint">Fertilizer amount (0-500 kg/ha)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Irrigation_Schedule">
+                                    <span class="label-icon">🚿</span>
+                                    Irrigation Schedule <span class="data-indicator good" title="4000 samples">●</span>
+                                </label>
+                                <select id="Irrigation_Schedule" name="Irrigation_Schedule">
+                                    <option value="">Select frequency</option>
+                                    <option value="0">None (Rainfed)</option>
+                                    <option value="1">Weekly</option>
+                                    <option value="2">Bi-weekly</option>
+                                    <option value="3">Every 3 days</option>
+                                    <option value="4">Every 4 days</option>
+                                    <option value="5">Every 5 days</option>
+                                    <option value="6">Every 6 days</option>
+                                    <option value="7">Daily</option>
+                                    <option value="8">Twice daily</option>
+                                    <option value="9">Drip irrigation</option>
+                                    <option value="10">Sprinkler system</option>
+                                </select>
+                                <span class="hint">Irrigation frequency</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Seed_Variety">
+                                    <span class="label-icon">🌰</span>
+                                    Seed Variety <span class="data-indicator good" title="4000 samples">●</span>
+                                </label>
+                                <select id="Seed_Variety" name="Seed_Variety">
+                                    <option value="">Select variety</option>
+                                    <option value="0">Standard</option>
+                                    <option value="1">Hybrid</option>
+                                    <option value="2">High-yield</option>
+                                    <option value="3">Drought-resistant</option>
+                                    <option value="4">Disease-resistant</option>
+                                    <option value="5">Organic</option>
+                                </select>
+                                <span class="hint">Type of seed variety</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crop & Location Section - CONTEXTUAL (for display & future model) -->
+                    <div class="form-group-container highlight-section contextual-section" data-field-type="contextual">
+                        <h3 class="group-title">🌾 Crop & Location <span class="field-badge contextual">📋 Contextual</span></h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="crop_type">
+                                    <span class="label-icon">🌱</span>
+                                    Crop Type
+                                </label>
+                                <select id="crop_type" name="crop_type" required>
+                                    <option value="">Select crop</option>
+                                    <option value="Rice">Rice</option>
+                                    <option value="Wheat">Wheat</option>
+                                    <option value="Maize">Maize</option>
+                                    <option value="Bajra">Bajra (Pearl Millet)</option>
+                                    <option value="Jowar">Jowar (Sorghum)</option>
+                                    <option value="Pulses">Pulses</option>
+                                    <option value="Soybean">Soybean</option>
+                                    <option value="Groundnut">Groundnut</option>
+                                    <option value="Cotton">Cotton</option>
+                                    <option value="Sugarcane">Sugarcane</option>
+                                    <option value="Oilseeds">Oilseeds</option>
+                                    <option value="Vegetables">Vegetables</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                                <span class="hint">Type of crop being cultivated</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="state">
+                                    <span class="label-icon">📍</span>
+                                    State
+                                </label>
+                                <select id="state" name="state" required>
+                                    <option value="">Select state</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span class="hint">State where crop is grown</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="district">
+                                    <span class="label-icon">🏘️</span>
+                                    District (Optional)
+                                </label>
+                                <input type="text" id="district" name="district" 
+                                       placeholder="e.g., Patna, Ranchi">
+                                <span class="hint">District name (optional)</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="season">
+                                    <span class="label-icon">📅</span>
+                                    Season
+                                </label>
+                                <select id="season" name="season">
+                                    <option value="">Select season</option>
+                                    <option value="Kharif">Kharif (Monsoon: Jun-Oct)</option>
+                                    <option value="Rabi">Rabi (Winter: Nov-Mar)</option>
+                                    <option value="Zaid">Zaid (Summer: Mar-Jun)</option>
+                                    <option value="Annual">Annual/Perennial</option>
+                                </select>
+                                <span class="hint">Growing season</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="agro_climatic_zone">
+                                    <span class="label-icon">🌍</span>
+                                    Agro-Climatic Zone
+                                </label>
+                                <select id="agro_climatic_zone" name="agro_climatic_zone">
+                                    <option value="">Select zone (optional)</option>
+                                    <option value="Western Himalayan">Western Himalayan</option>
+                                    <option value="Eastern Himalayan">Eastern Himalayan</option>
+                                    <option value="Lower Gangetic Plains">Lower Gangetic Plains</option>
+                                    <option value="Middle Gangetic Plains">Middle Gangetic Plains</option>
+                                    <option value="Upper Gangetic Plains">Upper Gangetic Plains</option>
+                                    <option value="Trans-Gangetic Plains">Trans-Gangetic Plains</option>
+                                    <option value="Eastern Plateau & Hills">Eastern Plateau & Hills</option>
+                                    <option value="Central Plateau & Hills">Central Plateau & Hills</option>
+                                    <option value="Western Plateau & Hills">Western Plateau & Hills</option>
+                                    <option value="Southern Plateau & Hills">Southern Plateau & Hills</option>
+                                    <option value="East Coast Plains & Hills">East Coast Plains & Hills</option>
+                                    <option value="West Coast Plains & Ghats">West Coast Plains & Ghats</option>
+                                    <option value="Gujarat Plains & Hills">Gujarat Plains & Hills</option>
+                                    <option value="Western Dry Region">Western Dry Region</option>
+                                    <option value="Island Region">Island Region</option>
+                                </select>
+                                <span class="hint">India's 15 agro-climatic zones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farm Area Section - CONTEXTUAL (for total production calc & future) -->
+                    <div class="form-group-container highlight-section contextual-section" data-field-type="contextual">
+                        <h3 class="group-title">📐 Farm Area & Location <span class="field-badge contextual">📋 Contextual</span></h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="farm_area">
+                                    <span class="label-icon">🏞️</span>
+                                    Farm Area
+                                </label>
+                                <div class="input-with-unit">
+                                    <input type="number" id="farm_area" name="farm_area" 
+                                           placeholder="e.g., 2.5" min="0.01" step="0.01">
+                                    <select id="farm_area_unit" name="farm_area_unit">
+                                        <option value="Hectare">Hectare</option>
+                                        <option value="Acre">Acre</option>
+                                        <option value="Bigha">Bigha</option>
+                                    </select>
+                                </div>
+                                <span class="hint">Your farm/field size</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="latitude">
+                                    <span class="label-icon">🌐</span>
+                                    Latitude (Optional)
+                                </label>
+                                <input type="number" id="latitude" name="latitude" 
+                                       placeholder="e.g., 25.5941" min="-90" max="90" step="0.0001">
+                                <span class="hint">Field centroid latitude</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="longitude">
+                                    <span class="label-icon">🌐</span>
+                                    Longitude (Optional)
+                                </label>
+                                <input type="number" id="longitude" name="longitude" 
+                                       placeholder="e.g., 85.1376" min="-180" max="180" step="0.0001">
+                                <span class="hint">Field centroid longitude</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="elevation">
+                                    <span class="label-icon">⛰️</span>
+                                    Elevation (m)
+                                </label>
+                                <input type="number" id="elevation" name="elevation" 
+                                       placeholder="e.g., 150" min="0" max="8848" step="1">
+                                <span class="hint">Altitude above sea level</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sowing_date">
+                                    <span class="label-icon">🌱</span>
+                                    Sowing Date
+                                </label>
+                                <input type="date" id="sowing_date" name="sowing_date">
+                                <span class="hint">Planting/sowing date</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expected_harvest_date">
+                                    <span class="label-icon">🌾</span>
+                                    Expected Harvest
+                                </label>
+                                <input type="date" id="expected_harvest_date" name="expected_harvest_date">
+                                <span class="hint">Expected harvest date</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Crop Comparison Toggle (NEW) -->
+                    <div class="form-group-container comparison-section">
+                        <div class="comparison-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="compare_crops" name="compare_crops">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">🔁 Compare Multiple Crops</span>
+                            </label>
+                            <p class="hint">Compare predicted yields across different crop types with same conditions</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="predictBtn">
+                            <span class="btn-icon">🔮</span>
+                            Predict Yield
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="resetBtn">
+                            <span class="btn-icon">🔄</span>
+                            Reset Form
+                        </button>
+                        <button type="button" class="btn btn-outline" id="sampleBtn">
+                            <span class="btn-icon">📝</span>
+                            Load Sample Data
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection">
+                <div class="section-header">
+                    <h2 id="resultsTitle">📈 Prediction Results</h2>
+                </div>
+                
+                <div class="results-container" id="resultsContainer">
+                    <div class="result-placeholder">
+                        <span class="placeholder-icon">🌾</span>
+                        <p>Enter crop parameters and click "Predict Yield" to see results</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Multi-Crop Comparison Results Section (NEW) -->
+            <section class="comparison-results-section" id="comparisonSection" style="display: none;">
+                <div class="section-header">
+                    <h2>📊 Multi-Crop Yield Comparison</h2>
+                    <p>Predicted yields for different crops under the same conditions</p>
+                </div>
+                <div class="comparison-table-container" id="comparisonResults">
+                    <!-- Comparison table will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Model Info Section -->
+            <section class="info-section">
+                <div class="section-header">
+                    <h2>ℹ️ Model Information</h2>
+                </div>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-icon">🤖</div>
+                        <div class="info-content">
+                            <h4>Model Type</h4>
+                            <p id="modelName">Gradient Boosting</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📊</div>
+                        <div class="info-content">
+                            <h4>R² Score</h4>
+                            <p id="r2Score">0.9750</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📉</div>
+                        <div class="info-content">
+                            <h4>MAE</h4>
+                            <p id="maeScore">37.72 kg/ha</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📏</div>
+                        <div class="info-content">
+                            <h4>RMSE</h4>
+                            <p id="rmseScore">52.20 kg/ha</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>🌾 Crop Yield Prediction System | Phase-2 | Built with Machine Learning</p>
+            <p class="footer-sub">© 2025 Pushkarjay | Powered by Gradient Boosting Algorithm</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Analyzing crop data...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

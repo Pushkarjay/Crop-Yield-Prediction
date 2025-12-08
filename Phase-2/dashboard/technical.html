@@ -581,7 +581,7 @@
                         <div class="metric-label">Features Used</div>
                     </div>
                     <div class="metric-card tertiary">
-                        <div class="metric-value">96.27%</div>
+                        <div class="metric-value">91.95%</div>
                         <div class="metric-label">R² Score</div>
                     </div>
                 </div>
@@ -1030,15 +1030,15 @@ X_train, X_test, y_train, y_test = train_test_split(
                     </div>
                     <div class="algo-metrics">
                         <div class="algo-metric">
-                            <div class="algo-metric-value">0.9627</div>
+                            <div class="algo-metric-value">0.9195</div>
                             <div class="algo-metric-label">R² Score</div>
                         </div>
                         <div class="algo-metric">
-                            <div class="algo-metric-value">1,610</div>
+                            <div class="algo-metric-value">2,501</div>
                             <div class="algo-metric-label">MAE (kg/ha)</div>
                         </div>
                         <div class="algo-metric">
-                            <div class="algo-metric-value">3,574</div>
+                            <div class="algo-metric-value">5,247</div>
                             <div class="algo-metric-label">RMSE (kg/ha)</div>
                         </div>
                     </div>
@@ -1150,19 +1150,19 @@ joblib.dump(model, 'model/model.pkl')</code></pre>
                     <tr>
                         <td><strong>R² (Coefficient of Determination)</strong></td>
                         <td><code>1 - (SS_res / SS_tot)</code></td>
-                        <td>0.9627</td>
-                        <td>96.27% variance explained</td>
+                        <td>0.9195</td>
+                        <td>91.95% variance explained</td>
                     </tr>
                     <tr>
                         <td><strong>MAE (Mean Absolute Error)</strong></td>
                         <td><code>mean(|y - ŷ|)</code></td>
-                        <td>1,610 kg/ha</td>
+                        <td>2,501 kg/ha</td>
                         <td>Average prediction error</td>
                     </tr>
                     <tr>
                         <td><strong>RMSE (Root Mean Squared Error)</strong></td>
                         <td><code>sqrt(mean((y - ŷ)²))</code></td>
-                        <td>3,574 kg/ha</td>
+                        <td>5,247 kg/ha</td>
                         <td>Penalizes large errors</td>
                     </tr>
                 </table>
@@ -1183,8 +1183,8 @@ r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
-print(f"R² Score: {r2:.4f}")   # 0.9627
-print(f"MAE: {mae:.2f}")       # 1610.29
+print(f"R² Score: {r2:.4f}")   # 0.9195
+print(f"MAE: {mae:.2f}")       # 2501.00
 print(f"RMSE: {rmse:.2f}")     # 3573.78</code></pre>
                 </div>
                 
@@ -1197,7 +1197,7 @@ print(f"RMSE: {rmse:.2f}")     # 3573.78</code></pre>
                     <img src="../plots/07_prediction_analysis.png" alt="Prediction Analysis" 
                          style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
-                        <strong>Figure:</strong> Actual vs Predicted yield showing R² = 0.9627
+                        <strong>Figure:</strong> Actual vs Predicted yield showing R² = 0.9195
                     </p>
                 </div>
             </section>

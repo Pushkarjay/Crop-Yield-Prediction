@@ -2,18 +2,21 @@
 
 **Crop Yield Prediction System - End-to-End Implementation**
 
-Author: **Pushkarjay Ajay**
+Author: **Pushkarjay Ajay**  
+GitHub: [github.com/Pushkarjay/Crop-Yield-Prediction](https://github.com/Pushkarjay/Crop-Yield-Prediction)
 
 ---
 
 ## 📋 Overview
 
 Phase-2 implements the complete production-ready machine learning pipeline including:
+- Synthetic dataset generation (75,000 records)
 - Data preprocessing and feature engineering
-- Model training and evaluation
+- Model training and evaluation (Gradient Boosting, R² = 0.9195)
 - REST API for predictions
 - Interactive web dashboard
-- Technical documentation
+- Comprehensive technical documentation
+- Terminal logging for reproducibility
 
 ---
 
@@ -21,9 +24,19 @@ Phase-2 implements the complete production-ready machine learning pipeline inclu
 
 ```
 Phase-2/
+├── src/                          # Source Code Modules
+│   ├── __init__.py              # Package initialization
+│   ├── config.py                # Configuration & constants
+│   ├── utils.py                 # Logging & helper utilities
+│   ├── data_generation.py       # Synthetic dataset generator
+│   ├── visualization.py         # Plot generation functions
+│   ├── training.py              # ML model training pipeline
+│   ├── outlier_analysis.py      # Outlier detection & analysis
+│   └── legacy_*.py              # Original workflow scripts (reference)
+│
 ├── api/                          # Flask REST API
-│   ├── app.py                    # Main API application
-│   └── requirements.txt          # Python dependencies
+│   ├── app.py                   # Main API application
+│   └── requirements.txt         # Python dependencies
 │
 ├── dashboard/                    # Frontend Web UI
 │   ├── index.html               # Main prediction dashboard
@@ -35,22 +48,26 @@ Phase-2/
 ├── model/                        # Trained Model Artifacts
 │   ├── model.pkl                # Gradient Boosting model
 │   ├── scaler.pkl               # StandardScaler
-│   ├── imputer.pkl              # SimpleImputer (median)
+│   ├── imputer.pkl              # SimpleImputer
 │   ├── label_encoders.pkl       # Categorical encoders
 │   ├── feature_list.pkl         # Feature names
 │   └── model_info.pkl           # Model metadata
 │
-├── plots/                        # EDA Visualizations
+├── plots/                        # Visualizations (8 plots)
 │   ├── 01_yield_distribution.png
 │   ├── 02_correlation_matrix.png
 │   ├── 03_crop_yield_comparison.png
 │   ├── 04_state_yield_comparison.png
 │   ├── 05_weather_soil_yield.png
-│   └── 06_feature_importance.png
+│   ├── 06_feature_importance.png
+│   ├── 07_outlier_analysis.png
+│   └── 07_prediction_analysis.png
 │
-├── full_workflow.py              # Complete ML pipeline script
-├── unified_dataset.csv           # Merged & preprocessed dataset
-├── Phase-2-EndToEnd.ipynb        # Jupyter notebook version
+├── logs/                         # Terminal Output Logs (auto-generated)
+├── Terminal Log/                 # Historical terminal logs
+│
+├── run_pipeline.py               # Master pipeline runner
+├── unified_dataset.csv           # 75K synthetic dataset
 └── README.md                     # This file
 ```
 
@@ -61,13 +78,27 @@ Phase-2/
 ### 1. Install Dependencies
 
 ```bash
-cd api
-pip install -r requirements.txt
+pip install -r api/requirements.txt
 ```
 
-### 2. Start Backend API
+### 2. Run Full Pipeline (Generate Data + Train Model)
 
 ```bash
+python run_pipeline.py --all
+```
+
+Or run individual steps:
+```bash
+python run_pipeline.py --generate    # Generate synthetic data
+python run_pipeline.py --train       # Train model only
+python run_pipeline.py --analyze     # Outlier analysis
+python run_pipeline.py --visualize   # Create plots
+```
+
+### 3. Start Backend API
+
+```bash
+cd api
 python app.py
 ```
 
@@ -78,7 +109,7 @@ Output:
 Starting server on http://localhost:5000
 ```
 
-### 3. Start Frontend
+### 4. Start Frontend
 
 ```bash
 cd dashboard
@@ -164,9 +195,9 @@ curl -X POST http://localhost:5000/predict \
 
 | Metric | Value |
 |--------|-------|
-| R² Score | 0.9627 |
-| MAE | 1,610 kg/ha |
-| RMSE | 3,574 kg/ha |
+| R² Score | 0.9195 |
+| MAE | 2,501 kg/ha |
+| RMSE | 5,247 kg/ha |
 | Training Samples | 60,000 |
 | Test Samples | 15,000 |
 

@@ -36,7 +36,7 @@ This project implements an end-to-end machine learning pipeline for predicting c
 ### Key Highlights
 
 - 📊 **75,000 samples** synthetic dataset with 22 crops across 20 Indian states
-- 🤖 **96.27% accuracy** (R² Score) with Gradient Boosting
+- 🤖 **91.95% accuracy** (R² Score) with Gradient Boosting
 - 🌐 **REST API** for seamless integration
 - 📱 **Responsive Dashboard** with real-time predictions
 - 📈 **Multi-crop comparison** feature
@@ -59,6 +59,13 @@ Crop-Yield-Prediction/
 │   └── *.pdf, *.pptx            # Project documentation
 │
 ├── Phase-2/                      # Production ML pipeline
+│   ├── src/                     # Source code modules
+│   │   ├── config.py            # Configuration & constants
+│   │   ├── utils.py             # Logging utilities
+│   │   ├── data_generation.py   # Synthetic dataset generator
+│   │   ├── visualization.py     # Plot generation
+│   │   ├── training.py          # ML training pipeline
+│   │   └── outlier_analysis.py  # Outlier detection
 │   ├── api/                      # Flask REST API
 │   │   ├── app.py
 │   │   └── requirements.txt
@@ -69,14 +76,10 @@ Crop-Yield-Prediction/
 │   │   ├── script.js
 │   │   └── style.css
 │   ├── model/                    # Trained model artifacts
-│   │   ├── model.pkl
-│   │   ├── scaler.pkl
-│   │   ├── imputer.pkl
-│   │   └── feature_list.pkl
-│   ├── plots/                    # EDA visualizations
-│   │   └── *.png
-│   ├── full_workflow.py          # Complete ML pipeline script
-│   ├── unified_dataset.csv       # Merged dataset
+│   ├── plots/                    # EDA visualizations (8 plots)
+│   ├── logs/                     # Terminal output logs
+│   ├── run_pipeline.py           # Master pipeline runner
+│   ├── unified_dataset.csv       # 75K synthetic dataset
 │   └── README.md
 │
 └── README.md                     # This file

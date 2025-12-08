@@ -526,19 +526,19 @@
             
             <div class="meta">
                 <div class="meta-item">
-                    <div class="value">7,109</div>
-                    <div class="label">Data Samples</div>
+                    <div class="value">75,000</div>
+                    <div class="label">Synthetic Samples</div>
                 </div>
                 <div class="meta-item">
-                    <div class="value">12</div>
+                    <div class="value">22</div>
                     <div class="label">Features</div>
                 </div>
                 <div class="meta-item">
-                    <div class="value">97.5%</div>
+                    <div class="value">96.27%</div>
                     <div class="label">R² Accuracy</div>
                 </div>
                 <div class="meta-item">
-                    <div class="value">5</div>
+                    <div class="value">4</div>
                     <div class="label">Models Tested</div>
                 </div>
             </div>
@@ -557,22 +557,22 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="icon">📊</div>
-                    <div class="value">3</div>
-                    <div class="label">Source Datasets</div>
+                    <div class="value">75K</div>
+                    <div class="label">Synthetic Records</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🔧</div>
-                    <div class="value">12</div>
+                    <div class="value">22</div>
                     <div class="label">ML Features</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🤖</div>
-                    <div class="value">5</div>
+                    <div class="value">4</div>
                     <div class="label">Models Trained</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🎯</div>
-                    <div class="value">97.5%</div>
+                    <div class="value">96.27%</div>
                     <div class="label">Best R² Score</div>
                 </div>
             </div>
@@ -717,81 +717,78 @@
         <!-- Slide 9: Data Quality -->
         <div class="slide">
             <span class="slide-number">8</span>
-            <h2>📊 Data Quality Status</h2>
+            <h2>📊 Synthetic Dataset Info</h2>
             <p>
-                Understanding data availability is crucial for interpreting predictions.
-                Features are categorized by training data coverage.
+                A synthetic dataset of 75,000 records was generated to ensure complete data coverage
+                with realistic correlations between agricultural features.
             </p>
             
             <div class="two-col">
                 <div>
-                    <h3>🟢 Good Data (3000+ samples)</h3>
+                    <h3>🟢 Complete Coverage (75K samples)</h3>
                     <ul class="feature-list">
-                        <li class="good">Rainfall_mm <span class="badge good">7,099</span></li>
-                        <li class="good">Fertilizer_Amount <span class="badge good">4,099</span></li>
-                        <li class="good">Sunshine_hours <span class="badge good">4,000</span></li>
-                        <li class="good">Soil_Quality <span class="badge good">4,000</span></li>
-                        <li class="good">Irrigation_Schedule <span class="badge good">4,000</span></li>
-                        <li class="good">Seed_Variety <span class="badge good">4,000</span></li>
-                        <li class="good">Temperature_C <span class="badge good">3,099</span></li>
-                        <li class="good">Humidity <span class="badge good">3,000</span></li>
+                        <li class="good">Crop <span class="badge good">22 types</span></li>
+                        <li class="good">State <span class="badge good">20 states</span></li>
+                        <li class="good">Year <span class="badge good">2015-2024</span></li>
+                        <li class="good">Weather (7 features) <span class="badge good">100%</span></li>
+                        <li class="good">Soil (7 features) <span class="badge good">100%</span></li>
+                        <li class="good">Management (4 features) <span class="badge good">100%</span></li>
                     </ul>
                 </div>
                 <div>
-                    <h3>🟡 Partial Data (imputed)</h3>
+                    <h3>📈 Dataset Properties</h3>
                     <ul class="feature-list">
-                        <li class="partial">Nitrogen <span class="badge partial">2,299</span></li>
-                        <li class="partial">Phosphorus <span class="badge partial">2,299</span></li>
-                        <li class="partial">Potassium <span class="badge partial">2,299</span></li>
-                        <li class="partial">Soil_Humidity <span class="badge partial">800</span></li>
+                        <li class="good">Total Records <span class="badge good">75,000</span></li>
+                        <li class="good">Features <span class="badge good">27 cols</span></li>
+                        <li class="good">ML Features <span class="badge good">22 used</span></li>
+                        <li class="good">Missing Values <span class="badge good">0</span></li>
                     </ul>
                     
-                    <h3 style="margin-top: 25px;">⚪ Contextual Only</h3>
+                    <h3 style="margin-top: 25px;">🎯 Advantages</h3>
                     <ul class="feature-list">
-                        <li class="contextual">crop_type <span class="badge contextual">Display</span></li>
-                        <li class="contextual">state <span class="badge contextual">Display</span></li>
-                        <li class="contextual">farm_area <span class="badge contextual">Calc</span></li>
-                        <li class="contextual">coordinates <span class="badge contextual">Future</span></li>
+                        <li class="good">No imputation needed</li>
+                        <li class="good">Realistic correlations</li>
+                        <li class="good">Balanced distribution</li>
                     </ul>
                 </div>
             </div>
             
-            <h3>Data Coverage by Feature</h3>
+            <h3>Data Coverage - All Features at 100%</h3>
             <div class="quality-bars">
                 <div class="quality-bar">
                     <div class="quality-bar-header">
-                        <span>Rainfall_mm</span>
-                        <span>99.9%</span>
+                        <span>Weather Features</span>
+                        <span>100%</span>
                     </div>
                     <div class="quality-bar-track">
-                        <div class="quality-bar-fill good" style="width: 99.9%"></div>
+                        <div class="quality-bar-fill good" style="width: 100%"></div>
                     </div>
                 </div>
                 <div class="quality-bar">
                     <div class="quality-bar-header">
-                        <span>Fertilizer_Amount</span>
-                        <span>57.7%</span>
+                        <span>Soil & Nutrient Features</span>
+                        <span>100%</span>
                     </div>
                     <div class="quality-bar-track">
-                        <div class="quality-bar-fill good" style="width: 57.7%"></div>
+                        <div class="quality-bar-fill good" style="width: 100%"></div>
                     </div>
                 </div>
                 <div class="quality-bar">
                     <div class="quality-bar-header">
-                        <span>N/P/K Nutrients</span>
-                        <span>32.3%</span>
+                        <span>Management Features</span>
+                        <span>100%</span>
                     </div>
                     <div class="quality-bar-track">
-                        <div class="quality-bar-fill partial" style="width: 32.3%"></div>
+                        <div class="quality-bar-fill good" style="width: 100%"></div>
                     </div>
                 </div>
                 <div class="quality-bar">
                     <div class="quality-bar-header">
-                        <span>Soil_Humidity</span>
-                        <span>11.3%</span>
+                        <span>Location Features</span>
+                        <span>100%</span>
                     </div>
                     <div class="quality-bar-track">
-                        <div class="quality-bar-fill partial" style="width: 11.3%"></div>
+                        <div class="quality-bar-fill good" style="width: 100%"></div>
                     </div>
                 </div>
             </div>
@@ -953,11 +950,11 @@
                 <div>
                     <h3>🎯 Achievements</h3>
                     <ul class="feature-list">
-                        <li class="good">Unified 3 heterogeneous datasets</li>
-                        <li class="good">97.5% prediction accuracy (R²)</li>
+                        <li class="good">Generated 75K synthetic dataset</li>
+                        <li class="good">96.27% prediction accuracy (R²)</li>
                         <li class="good">REST API with CORS support</li>
                         <li class="good">Interactive dashboard</li>
-                        <li class="good">Multi-crop comparison</li>
+                        <li class="good">22 crops, 20 states coverage</li>
                         <li class="good">Total production calculator</li>
                     </ul>
                 </div>

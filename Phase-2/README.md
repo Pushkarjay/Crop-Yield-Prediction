@@ -106,21 +106,28 @@ Open: `http://localhost:8080`
 curl -X POST http://localhost:5000/predict \
   -H "Content-Type: application/json" \
   -d '{
-    "Rainfall_mm": 500,
-    "Temperature_C": 25,
+    "Crop": "Rice",
+    "State": "Punjab",
+    "Year": 2024,
+    "Rainfall_mm": 1200,
+    "Temperature_C": 28,
     "Humidity": 70,
-    "Soil_Quality": 80,
-    "Nitrogen": 50,
-    "Phosphorus": 30,
-    "Potassium": 40,
-    "Fertilizer_Amount_kg_per_hectare": 150,
-    "Sunshine_hours": 6,
-    "Soil_Humidity": 45,
-    "Irrigation_Schedule": 5,
-    "Seed_Variety": 2,
-    "crop_type": "Rice",
-    "state": "Bihar",
-    "compare_crops": true
+    "Soil_Quality": 75,
+    "Nitrogen": 45,
+    "Phosphorus": 35,
+    "Potassium": 42,
+    "Fertilizer_Amount": 180,
+    "Irrigation_Type": "Canal",
+    "Seed_Variety": "Hybrid",
+    "Pesticide_Usage": 8.5,
+    "Sunshine_Hours": 7.2,
+    "GDD": 1850,
+    "Pressure_KPa": 101.3,
+    "Wind_Speed_Kmh": 12,
+    "Soil_pH": 6.8,
+    "OrganicCarbon": 1.2,
+    "Soil_Moisture": 42,
+    "Crop_Price": 2200
   }'
 ```
 
@@ -128,21 +135,26 @@ curl -X POST http://localhost:5000/predict \
 
 ## 📊 ML Features
 
-### Active ML Features (12)
+### Active ML Features (22)
 
-| Category | Features | Data Quality |
-|----------|----------|--------------|
-| **Weather** | Rainfall_mm, Temperature_C, Humidity, Sunshine_hours | 🟢 Good (3000+) |
-| **Soil** | Soil_Quality, Nitrogen, Phosphorus, Potassium, Soil_Humidity | 🟡 Mixed |
-| **Management** | Fertilizer_Amount, Irrigation_Schedule, Seed_Variety | 🟢 Good |
+| Category | Features | Status |
+|----------|----------|--------|
+| **Weather** | Rainfall_mm, Temperature_C, Humidity, Sunshine_Hours, GDD, Pressure_KPa, Wind_Speed_Kmh | 🟢 Complete |
+| **Soil** | Soil_Quality, Nitrogen, Phosphorus, Potassium, Soil_pH, OrganicCarbon, Soil_Moisture | 🟢 Complete |
+| **Management** | Fertilizer_Amount, Irrigation_Type, Seed_Variety, Pesticide_Usage | 🟢 Complete |
+| **Location** | Crop, State, Year, Crop_Price | 🟢 Complete |
+| **Encoded** | Crop_Encoded, State_Encoded | 🟢 Auto-generated |
 
-### Data Quality Summary
+### Synthetic Dataset (75,000 records)
 
-| Quality | Features | Sample Count |
-|---------|----------|--------------|
-| 🟢 Good | 8 features | 3,000 - 7,099 |
-| 🟡 Partial | 4 features | 800 - 2,299 |
-| ⚪ Contextual | crop, state, etc. | Display only |
+| Property | Value |
+|----------|-------|
+| Total Records | 75,000 |
+| Features | 27 columns |
+| Crops | 22 types |
+| States | 20 Indian states |
+| Years | 2015-2024 |
+| Missing Values | 0 |
 
 ---
 
@@ -152,11 +164,11 @@ curl -X POST http://localhost:5000/predict \
 
 | Metric | Value |
 |--------|-------|
-| R² Score | 0.9750 |
-| MAE | 37.72 kg/ha |
-| RMSE | 52.20 kg/ha |
-| Training Samples | 5,687 |
-| Test Samples | 1,422 |
+| R² Score | 0.9627 |
+| MAE | 1,610 kg/ha |
+| RMSE | 3,574 kg/ha |
+| Training Samples | 60,000 |
+| Test Samples | 15,000 |
 
 ---
 
@@ -187,8 +199,9 @@ curl -X POST http://localhost:5000/predict \
 |------|-------------|
 | `model.pkl` | Trained Gradient Boosting model |
 | `scaler.pkl` | StandardScaler for normalization |
-| `imputer.pkl` | SimpleImputer for missing values |
-| `feature_list.pkl` | List of 12 feature names |
+| `label_encoders.pkl` | Encoders for Crop, State, Irrigation, Seed |
+| `feature_list.pkl` | List of 22 feature names |
+| `model_info.pkl` | Model metadata and metrics |
 
 ### Dashboard Pages
 

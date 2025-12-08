@@ -1,0 +1,560 @@
+cd E:\Projects\Working\Crop-Yield-Prediction\Phase-2; & "E:\Projects\Working\Crop-Yield-Prediction\.venv\Scripts\python.exe" full_workflow.py
+p-Yield-Prediction\.venv\Scripts\python.exe" full_workflow.py                                                                 ======================================================================
+🌾 CROP YIELD PREDICTION - FULL ML WORKFLOW
+======================================================================
+
+======================================================================
+📋 STEP 3: CREATE MASTER COLUMN SCHEMA
+======================================================================
+✅ Master schema created with 30 columns
+
+📋 Master Column Categories:
+   A. Identification: State, District, Year, Season, Crop
+   B. Weather: Rainfall_mm, Temperature_C, Humidity, Sunshine_hours, GDD, etc.
+   C. Soil: Soil_Type, Soil_pH, Nitrogen, Phosphorus, Potassium, etc.
+   D. Management: Irrigation_Type, Fertilizer_Amount, Seed_Variety, etc.
+   E. Economic: Crop_Price
+   F. Target: Yield_kg_per_hectare
+
+======================================================================
+🔄 STEP 4: MERGE ALL DATASETS INTO UNIFIED DATASET
+======================================================================
+✅ Loaded: agricultural_yield_test.csv (4000 rows, 7 cols)
+✅ Loaded: Data.csv (8914 rows, 10 cols)
+✅ Loaded: indiancrop_dataset.csv (2200 rows, 10 cols)
+⚠️ Skipping Crop Data.xlsx (metadata only)
+✅ Loaded: crop yield data sheet.xlsx (109 rows, 7 cols)
+✅ Loaded: data.xlsx (800 rows, 12 cols)
+
+📊 Processing: agricultural_yield_test
+   ✓ Mapped: Soil_Quality → Soil_Quality
+   ✓ Mapped: Seed_Variety → Seed_Variety
+   ✓ Mapped: Fertilizer_Amount_kg_per_hectare → Fertilizer_Amount_kg_per_hectare
+   ✓ Mapped: Sunny_Days → Sunshine_hours
+   ✓ Mapped: Rainfall_mm → Rainfall_mm
+   ✓ Mapped: Irrigation_Schedule → Irrigation_Schedule
+   ✓ Mapped: Yield_kg_per_hectare → Yield_kg_per_hectare
+   📈 Added 4000 rows
+
+📊 Processing: data
+   ✓ Mapped: Moisture → Soil_Humidity
+   ✓ Mapped: rainfall → Rainfall_mm
+   ✓ Mapped: Average Humidity → Humidity
+   ✓ Mapped: Mean Temp → Temperature_C
+   ✓ Mapped: millet yield → Yield_kg_per_hectare
+   📈 Added 800 rows
+
+📊 Processing: indiancrop_dataset
+   ✓ Mapped: N_SOIL → Nitrogen
+   ✓ Mapped: P_SOIL → Phosphorus
+   ✓ Mapped: K_SOIL → Potassium
+   ✓ Mapped: TEMPERATURE → Temperature_C
+   ✓ Mapped: HUMIDITY → Humidity
+   ✓ Mapped: ph → Soil_pH
+   ✓ Mapped: RAINFALL → Rainfall_mm
+   ✓ Mapped: STATE → State
+   ✓ Mapped: CROP_PRICE → Crop_Price
+   ✓ Mapped: CROP → Crop
+   📈 Added 2200 rows
+
+📊 Processing: crop_yield_data_sheet
+   ✓ Mapped: Rain Fall (mm) → Rainfall_mm
+   ✓ Mapped: Fertilizer → Fertilizer_Amount_kg_per_hectare
+   ✓ Mapped: Temperatue → Temperature_C
+   ✓ Mapped: Nitrogen (N) → Nitrogen
+   ✓ Mapped: Phosphorus (P) → Phosphorus
+   ✓ Mapped: Potassium (K) → Potassium
+   ✓ Mapped: Yeild (Q/acre) → Yield_kg_per_hectare
+   📈 Added 109 rows
+
+🔄 Concatenating all datasets...
+
+✅ Unified dataset created!
+   Shape: 7109 rows × 31 columns
+
+======================================================================
+🧹 STEP 5: DATA CLEANING & PREPROCESSING
+======================================================================
+
+📊 Missing Value Summary:
+--------------------------------------------------
+   State: 4909 (69.05%)
+   District: 7109 (100.0%)
+   Year: 7109 (100.0%)
+   Season: 7109 (100.0%)
+   Crop: 4909 (69.05%)
+   Rainfall_mm: 10 (0.14%)
+   Temperature_C: 4010 (56.41%)
+   Humidity: 4109 (57.8%)
+   Sunshine_hours: 3109 (43.73%)
+   GDD: 7109 (100.0%)
+   Rainfall_Anomaly: 7109 (100.0%)
+   Pressure_KPa: 7109 (100.0%)
+   Wind_Speed_Kmh: 7109 (100.0%)
+   Soil_Type: 7109 (100.0%)
+   Soil_pH: 4909 (69.05%)
+   Soil_Quality: 3109 (43.73%)
+   OrganicCarbon: 7109 (100.0%)
+   Nitrogen: 4810 (67.66%)
+   Phosphorus: 4810 (67.66%)
+   Potassium: 4810 (67.66%)
+   Soil_Humidity: 6309 (88.75%)
+   Soil_Health_Score: 7109 (100.0%)
+   Irrigation_Type: 7109 (100.0%)
+   Irrigation_Schedule: 3109 (43.73%)
+   Sowing_Date: 7109 (100.0%)
+   Fertilizer_Amount_kg_per_hectare: 3010 (42.34%)
+   Seed_Variety: 3109 (43.73%)
+   Pesticide_Used: 7109 (100.0%)
+   Crop_Price: 4909 (69.05%)
+   Yield_kg_per_hectare: 2210 (31.09%)
+
+✅ Saved: unified_dataset.csv (7109 rows)
+
+======================================================================
+📊 STEP 6: DESCRIPTIVE SUMMARY
+======================================================================
+
+📈 Summary Statistics for Numeric Columns:
+       Rainfall_mm  Temperature_C     Humidity  Sunshine_hours  Pressure_KPa  Wind_Speed_Kmh      Soil_pH  Soil_Quality     Ni
+trogen   Phosphorus    Potassium  Soil_Humidity  Fertilizer_Amount_kg_per_hectare     Crop_Price  Yield_kg_per_hectare        count  7099.000000    3099.000000  3000.000000     4000.000000           0.0             0.0  2200.000000   4000.000000  2299.
+000000  2299.000000  2299.000000     800.000000                       4099.000000    2200.000000           4899.000000        mean    326.917841      38.969260    65.646971       99.841525           NaN             NaN     6.469480     74.924952    51.
+421053    51.974772    46.853415      12.903866                        170.895747    2689.228182            579.493038        std     239.469416      23.372711    23.370276        9.888547           NaN             NaN     0.773938     14.496298    36.
+371335    32.926947    49.921582       0.099445                         73.255102    3710.361267            327.612676        min       0.000000       8.825675    10.000000       66.724469           NaN             NaN     3.504752     50.003622     0.
+000000     5.000000     5.000000      12.547993                         50.000000       2.000000              0.000000        25%      89.030638      23.998431    49.185129       93.101146           NaN             NaN     5.971693     62.380142    22.
+000000    25.000000    20.000000      12.833139                        104.428868     950.000000            408.399764        50%     393.091911      27.847679    68.223142       99.762840           NaN             NaN     6.425045     74.630855    39.
+000000    49.000000    30.000000      12.910599                        172.061393    1825.000000            665.684237        75%     518.240954      56.000000    85.403021      106.447769           NaN             NaN     6.923643     87.792071    83.
+000000    67.000000    48.000000      12.973614                        234.066449    3500.000000            816.197073        max    1300.000000     102.000000   100.000000      138.520202           NaN             NaN     9.935091     99.998898   140.
+000000   145.000000   205.000000      13.183391                        299.992054  120000.000000           1406.110705        ✅ Saved: plots/01_yield_distribution.png
+
+======================================================================
+📊 STEP 7: DETAILED EDA
+======================================================================
+✅ Saved: plots/02_correlation_matrix.png
+✅ Saved: plots/03_crop_yield_comparison.png
+✅ Saved: plots/04_state_yield_comparison.png
+✅ Saved: plots/05_weather_soil_yield.png
+
+======================================================================
+🔧 STEP 8: MODEL PREPARATION
+======================================================================
+📊 Available features for modeling: 14
+   ['Rainfall_mm', 'Temperature_C', 'Humidity', 'Soil_pH', 'Soil_Quality', 'Nitrogen', 'Phosphorus', 'Potassium', 'Fertilizer_
+Amount_kg_per_hectare', 'Sunshine_hours', 'Soil_Humidity', 'Irrigation_Schedule', 'Seed_Variety', 'Crop_Price']               📊 Samples with target value: 4899
+   ✓ Encoded: Irrigation_Schedule
+   ✓ Encoded: Seed_Variety
+📊 Actual features used: 12
+   ['Rainfall_mm', 'Temperature_C', 'Humidity', 'Soil_Quality', 'Nitrogen', 'Phosphorus', 'Potassium', 'Fertilizer_Amount_kg_p
+er_hectare', 'Sunshine_hours', 'Soil_Humidity', 'Irrigation_Schedule', 'Seed_Variety']                                        
+📊 Final dataset shape: X=(4899, 12), y=(4899,)
+📊 Train set: 3919 samples
+📊 Test set: 980 samples
+
+======================================================================
+🤖 STEP 9: TRAIN MULTIPLE MODELS
+======================================================================
+
+🔄 Training: Linear Regression...
+   R² Score: 0.4936
+   MAE: 188.0779
+   RMSE: 235.0842
+
+🔄 Training: Decision Tree...
+   R² Score: 0.9568
+   MAE: 49.2343
+   RMSE: 68.6616
+
+🔄 Training: Random Forest...
+   R² Score: 0.9735
+   MAE: 38.2874
+   RMSE: 53.8209
+
+🔄 Training: Gradient Boosting...
+   R² Score: 0.9750
+   MAE: 37.7205
+   RMSE: 52.2008
+
+======================================================================
+📊 MODEL COMPARISON RESULTS
+======================================================================
+            Model       R²        MAE       RMSE
+Gradient Boosting 0.975031  37.720525  52.200822
+    Random Forest 0.973457  38.287351  53.820934
+    Decision Tree 0.956800  49.234323  68.661611
+Linear Regression 0.493591 188.077921 235.084161
+
+🏆 Best Model: Gradient Boosting (R² = 0.9750)
+
+======================================================================
+📊 STEP 10: FEATURE IMPORTANCE
+======================================================================
+
+📊 Feature Importance (Random Forest):
+                         Feature   Importance
+             Irrigation_Schedule 5.975374e-01
+                    Seed_Variety 3.288764e-01
+Fertilizer_Amount_kg_per_hectare 3.137386e-02
+                     Rainfall_mm 2.492295e-02
+                  Sunshine_hours 8.653986e-03
+                    Soil_Quality 8.628817e-03
+                   Temperature_C 4.560613e-06
+                   Soil_Humidity 1.291794e-06
+                        Humidity 6.564408e-07
+                        Nitrogen 3.982279e-08
+                       Potassium 2.680783e-08
+                      Phosphorus 1.686398e-08
+✅ Saved: plots/06_feature_importance.png
+
+======================================================================
+💾 STEP 11: SAVE FINAL MODEL
+======================================================================
+✅ Saved: model/model.pkl
+✅ Saved: model/scaler.pkl
+✅ Saved: model/label_encoders.pkl
+✅ Saved: model/feature_list.pkl
+✅ Saved: model/imputer.pkl
+✅ Saved: model/model_info.pkl
+
+======================================================================
+🎉 WORKFLOW COMPLETE!
+======================================================================
+
+✅ Steps 1-11 completed successfully!
+
+📁 Files Created:
+   - unified_dataset.csv (merged dataset)
+   - plots/01_yield_distribution.png
+   - plots/02_correlation_matrix.png
+   - plots/03_crop_yield_comparison.png
+   - plots/04_state_yield_comparison.png
+   - plots/05_weather_soil_yield.png
+   - plots/06_feature_importance.png
+   - model/model.pkl (best model: Gradient Boosting)
+   - model/scaler.pkl
+   - model/label_encoders.pkl
+   - model/feature_list.pkl
+   - model/imputer.pkl
+   - model/model_info.pkl
+
+🏆 Best Model Performance:
+   Model: Gradient Boosting
+   R² Score: 0.9750
+   MAE: 37.7205
+   RMSE: 52.2008
+
+📊 Now creating API and Dashboard (Steps 12-13)...
+
+______________________________________________________________________________________________________________________________________________________________________________________
+
+& "E:\Projects\Working\Crop-Yield-Prediction\.venv\Scripts\python.exe" generate_synthetic_dataset.py
+enerate_synthetic_dataset.py                                                                                                  ======================================================================
+🌾 SYNTHETIC DATASET GENERATOR
+======================================================================
+
+📊 Generating 75,000 synthetic records...
+   This may take a minute...
+   Generated 10,000 records...
+   Generated 20,000 records...
+   Generated 30,000 records...
+   Generated 40,000 records...
+   Generated 50,000 records...
+   Generated 60,000 records...
+   Generated 70,000 records...
+
+✅ Generated 75,000 records
+
+======================================================================
+📊 DATASET STATISTICS
+======================================================================
+
+📋 Shape: 75,000 rows × 27 columns
+
+🌾 Crops: 22 unique
+Crop
+Onion        3518
+Jute         3514
+Maize        3477
+Cotton       3470
+Chickpea     3465
+Mango        3446
+Mustard      3433
+Sunflower    3432
+Groundnut    3427
+Sugarcane    3416
+Name: count, dtype: int64
+
+🗺️ States: 20 unique
+State
+Andhra Pradesh      3868
+Himachal Pradesh    3836
+Bihar               3830
+Maharashtra         3808
+Odisha              3793
+Assam               3780
+Uttarakhand         3764
+Gujarat             3753
+Chhattisgarh        3752
+Kerala              3745
+Name: count, dtype: int64
+
+📅 Years: 2015 - 2024
+Year
+2015    7518
+2016    7637
+2017    7403
+2018    7453
+2019    7558
+2020    7504
+2021    7561
+2022    7427
+2023    7407
+2024    7532
+Name: count, dtype: int64
+
+🌡️ Temperature Range: 3.6°C - 45.0°C
+🌧️ Rainfall Range: 63mm - 5194mm
+🌾 Yield Range: 122 - 148455 kg/ha
+
+📊 Numeric Columns Summary:
+           Year  Rainfall_mm  Temperature_C  Humidity  Sunshine_hours       GDD  Rainfall_Anomaly  Pressure_KPa  Wind_Speed_Km
+h   Soil_pH  Soil_Quality  OrganicCarbon  Nitrogen  Phosphorus  Potassium  Soil_Moisture  Fertilizer_Amount_kg_per_hectare  Crop_Price  Yield_kg_per_hectare                                                                                                count  75000.00     75000.00       75000.00  75000.00        75000.00  75000.00          75000.00      75000.00        75000.0
+0  75000.00      75000.00       75000.00  75000.00    75000.00   75000.00       75000.00                          75000.00    75000.00              75000.00                                                                                                mean    2019.49      1171.27          25.55     70.77            7.00   1872.53              0.00        101.00           17.5
+0      6.82         70.02           1.40     97.45       62.83      80.93          50.12                            199.63     6405.47              10667.58                                                                                                std        2.87       786.43           7.18     16.62            1.73    897.12              0.17          1.15            7.2
+2      0.85         17.26           0.63     65.38       29.77      67.31          17.33                             86.71     7488.66              18366.94                                                                                                min     2015.00        62.51           3.61     40.00            4.00      0.00             -0.30         99.00            5.0
+0      4.50         40.00           0.30      7.50       10.01      10.00          20.00                             50.01      280.02                121.83                                                                                                25%     2017.00       570.91          20.74     56.55            5.50   1246.18             -0.15        100.01           11.2
+3      6.19         55.14           0.85     43.23       39.66      38.05          35.16                            124.37     2139.10               1213.48                                                                                                50%     2019.00       996.61          25.44     70.92            7.01   1819.84              0.00        101.00           17.5
+2      6.81         69.96           1.40     87.28       58.76      60.30          50.20                            199.52     4518.96               2313.20                                                                                                75%     2022.00      1547.47          30.60     85.69            8.50   2467.60              0.15        101.99           23.7
+6      7.44         84.91           1.95    138.15       80.75     102.16          65.15                            274.50     5864.28              12010.14                                                                                                max     2024.00      5194.46          45.00     95.00           10.00   5217.02              0.30        103.00           30.0
+0      9.00        100.00           2.50    324.98      169.00     454.94          80.00                            350.00    39997.71             148455.31                                                                                                
+======================================================================
+💾 SAVING DATASET
+======================================================================
+
+✅ Saved: unified_dataset.csv
+   Size: 75,000 rows × 27 columns
+✅ Saved: ../Dataset/synthetic_crop_data.csv
+   Removed old backup
+
+======================================================================
+✅ SYNTHETIC DATASET GENERATION COMPLETE!
+======================================================================
+
+📊 SUMMARY:
+   - Total Records: 75,000
+   - Crops: 22
+   - States: 20
+   - Years: 2015 - 2024
+   - All values are complete (no missing data)
+
+🔧 NEXT STEPS:
+   Run 'python full_workflow.py' to train the ML model on this dataset!
+
+______________________________________________________________________________________________________________________________________________________________________________________
+
+& "E:\Projects\Working\Crop-Yield-Prediction\.venv\Scripts\python.exe" train_model.py
+rain_model.py                                                                                                                 ======================================================================
+🌾 CROP YIELD PREDICTION - ML TRAINING PIPELINE
+   Using Synthetic Dataset (75,000 records)
+======================================================================
+
+======================================================================
+📂 STEP 1: LOAD DATASET
+======================================================================
+
+✅ Loaded dataset: 75,000 rows × 27 columns
+
+📋 Columns: ['State', 'District', 'Year', 'Season', 'Crop', 'Rainfall_mm', 'Temperature_C', 'Humidity', 'Sunshine_hours', 'GDD
+', 'Rainfall_Anomaly', 'Pressure_KPa', 'Wind_Speed_Kmh', 'Soil_Type', 'Soil_pH', 'Soil_Quality', 'OrganicCarbon', 'Nitrogen', 'Phosphorus', 'Potassium', 'Soil_Moisture', 'Irrigation_Type', 'Seed_Variety', 'Fertilizer_Amount_kg_per_hectare', 'Pesticide_Used', 'Crop_Price', 'Yield_kg_per_hectare']                                                                                  
+📊 Data Types:
+State                                object
+District                             object
+Year                                  int64
+Season                               object
+Crop                                 object
+Rainfall_mm                         float64
+Temperature_C                       float64
+Humidity                            float64
+Sunshine_hours                      float64
+GDD                                 float64
+Rainfall_Anomaly                    float64
+Pressure_KPa                        float64
+Wind_Speed_Kmh                      float64
+Soil_Type                            object
+Soil_pH                             float64
+Soil_Quality                        float64
+OrganicCarbon                       float64
+Nitrogen                            float64
+Phosphorus                          float64
+Potassium                           float64
+Soil_Moisture                       float64
+Irrigation_Type                      object
+Seed_Variety                         object
+Fertilizer_Amount_kg_per_hectare    float64
+Pesticide_Used                       object
+Crop_Price                          float64
+Yield_kg_per_hectare                float64
+dtype: object
+
+📊 Missing Values:
+   ✅ No missing values!
+
+======================================================================
+📊 STEP 2: EXPLORATORY DATA ANALYSIS
+======================================================================
+
+📈 Summary Statistics:
+           Year  Rainfall_mm  Temperature_C  Humidity  Sunshine_hours       GDD  Rainfall_Anomaly  Pressure_KPa  Wind_Speed_Km
+h   Soil_pH  Soil_Quality  OrganicCarbon  Nitrogen  Phosphorus  Potassium  Soil_Moisture  Fertilizer_Amount_kg_per_hectare  Crop_Price  Yield_kg_per_hectare                                                                                                count  75000.00     75000.00       75000.00  75000.00        75000.00  75000.00          75000.00      75000.00        75000.0
+0  75000.00      75000.00       75000.00  75000.00    75000.00   75000.00       75000.00                          75000.00    75000.00              75000.00                                                                                                mean    2019.49      1171.27          25.55     70.77            7.00   1872.53              0.00        101.00           17.5
+0      6.82         70.02           1.40     97.45       62.83      80.93          50.12                            199.63     6405.47              10667.58                                                                                                std        2.87       786.43           7.18     16.62            1.73    897.12              0.17          1.15            7.2
+2      0.85         17.26           0.63     65.38       29.77      67.31          17.33                             86.71     7488.66              18366.94                                                                                                min     2015.00        62.51           3.61     40.00            4.00      0.00             -0.30         99.00            5.0
+0      4.50         40.00           0.30      7.50       10.01      10.00          20.00                             50.01      280.02                121.83                                                                                                25%     2017.00       570.91          20.74     56.55            5.50   1246.18             -0.15        100.01           11.2
+3      6.19         55.14           0.85     43.23       39.66      38.05          35.16                            124.37     2139.10               1213.48                                                                                                50%     2019.00       996.61          25.44     70.92            7.01   1819.84              0.00        101.00           17.5
+2      6.81         69.96           1.40     87.28       58.76      60.30          50.20                            199.52     4518.96               2313.20                                                                                                75%     2022.00      1547.47          30.60     85.69            8.50   2467.60              0.15        101.99           23.7
+6      7.44         84.91           1.95    138.15       80.75     102.16          65.15                            274.50     5864.28              12010.14                                                                                                max     2024.00      5194.46          45.00     95.00           10.00   5217.02              0.30        103.00           30.0
+0      9.00        100.00           2.50    324.98      169.00     454.94          80.00                            350.00    39997.71             148455.31                                                                                                ✅ Saved: plots/01_yield_distribution.png
+✅ Saved: plots/02_correlation_matrix.png
+✅ Saved: plots/03_crop_yield_comparison.png
+✅ Saved: plots/04_state_yield_comparison.png
+✅ Saved: plots/05_weather_soil_yield.png
+
+======================================================================
+🔧 STEP 3: FEATURE ENGINEERING
+======================================================================
+
+📊 Numeric Features: 16
+📊 Categorical Features: 6
+   ✓ Encoded: Crop (22 categories)
+   ✓ Encoded: State (20 categories)
+   ✓ Encoded: Season (4 categories)
+   ✓ Encoded: Soil_Type (8 categories)
+   ✓ Encoded: Irrigation_Type (7 categories)
+   ✓ Encoded: Seed_Variety (5 categories)
+
+📊 Total Features: 22
+
+======================================================================
+📦 STEP 4: PREPARE DATA FOR MODELING
+======================================================================
+
+📊 Feature matrix shape: (75000, 22)
+📊 Target vector shape: (75000,)
+
+📊 Training set: 60,000 samples
+📊 Test set: 15,000 samples
+
+======================================================================
+🤖 STEP 5: TRAIN MULTIPLE MODELS
+======================================================================
+
+🔄 Training: Linear Regression...
+   R² Score: 0.5209
+   MAE: 8580.26
+   RMSE: 12801.30
+   CV R² (5-fold): 0.5206 ± 0.0035
+
+🔄 Training: Decision Tree...
+   R² Score: 0.9229
+   MAE: 2098.08
+   RMSE: 5135.56
+   CV R² (5-fold): 0.9160 ± 0.0035
+
+🔄 Training: Random Forest...
+   R² Score: 0.9572
+   MAE: 1666.21
+   RMSE: 3825.00
+   CV R² (5-fold): 0.9551 ± 0.0013
+
+🔄 Training: Gradient Boosting...
+   R² Score: 0.9627
+   MAE: 1610.29
+   RMSE: 3573.78
+   CV R² (5-fold): 0.9603 ± 0.0013
+
+======================================================================
+📊 MODEL COMPARISON RESULTS
+======================================================================
+
+            Model       R²         MAE         RMSE  CV_R²_Mean  CV_R²_Std
+Gradient Boosting 0.962660 1610.292278  3573.779465    0.960266   0.001265
+    Random Forest 0.957225 1666.210321  3825.004924    0.955116   0.001296
+    Decision Tree 0.922892 2098.081371  5135.559137    0.915980   0.003522
+Linear Regression 0.520893 8580.256376 12801.300190    0.520576   0.003516
+
+🏆 Best Model: Gradient Boosting (R² = 0.9627)
+
+======================================================================
+📊 STEP 7: FEATURE IMPORTANCE
+======================================================================
+
+📊 Top 15 Most Important Features (Random Forest):
+                         Feature  Importance
+                      Crop_Price    0.706222
+                    Crop_encoded    0.160021
+                     Rainfall_mm    0.043390
+                       Potassium    0.021619
+                    Soil_Quality    0.011638
+Fertilizer_Amount_kg_per_hectare    0.011253
+         Irrigation_Type_encoded    0.007801
+                   Temperature_C    0.005144
+                      Phosphorus    0.004146
+                             GDD    0.003378
+                        Nitrogen    0.003023
+                         Soil_pH    0.002721
+                  Season_encoded    0.002394
+                    Pressure_KPa    0.002376
+                  Wind_Speed_Kmh    0.002373
+✅ Saved: plots/06_feature_importance.png
+
+======================================================================
+💾 STEP 8: SAVE BEST MODEL
+======================================================================
+✅ Saved: model/model.pkl
+✅ Saved: model/scaler.pkl
+✅ Saved: model/label_encoders.pkl
+✅ Saved: model/feature_list.pkl
+✅ Saved: model/model_info.pkl
+
+======================================================================
+📊 STEP 9: PREDICTION VISUALIZATION
+======================================================================
+✅ Saved: plots/07_prediction_analysis.png
+
+======================================================================
+🎉 TRAINING PIPELINE COMPLETE!
+======================================================================
+
+📊 DATASET SUMMARY:
+   - Total Samples: 75,000
+   - Features: 22
+   - Crops: 22
+   - States: 20
+   - Years: 2015 - 2024
+
+🏆 BEST MODEL PERFORMANCE:
+   - Model: Gradient Boosting
+   - R² Score: 0.9627
+   - MAE: 1610.29 kg/ha
+   - RMSE: 3573.78 kg/ha
+   - CV R² (5-fold): 0.9603 ± 0.0013
+
+📁 FILES CREATED:
+   - plots/01_yield_distribution.png
+   - plots/02_correlation_matrix.png
+   - plots/03_crop_yield_comparison.png
+   - plots/04_state_yield_comparison.png
+   - plots/05_weather_soil_yield.png
+   - plots/06_feature_importance.png
+   - plots/07_prediction_analysis.png
+   - model/model.pkl
+   - model/scaler.pkl
+   - model/label_encoders.pkl
+   - model/feature_list.pkl
+   - model/model_info.pkl
+
+🚀 NEXT STEPS:
+   1. Start the API: cd api && python app.py
+   - plots/03_crop_yield_comparison.png
+   - plots/04_state_yield_comparison.png
+
+______________________________________________________________________________________________________________________________________________________________________________________

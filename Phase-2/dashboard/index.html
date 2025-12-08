@@ -47,26 +47,26 @@
 
                 <!-- Field Status Legend (hidden by default) -->
                 <div class="field-status-legend" id="fieldStatusLegend" style="display: none;">
-                    <h4 style="margin-bottom: 15px; color: var(--primary-color);">📊 Field Data Status</h4>
+                    <h4 style="margin-bottom: 15px; color: var(--primary-color);">📊 Field Data Status (75,000 Samples)</h4>
                     <div class="legend-item active-field">
                         <span class="status-dot active"></span>
                         <div>
-                            <strong>Good Data (3000+ samples)</strong><br>
-                            <small>Rainfall, Temperature, Humidity, Sunshine, Soil Quality, Irrigation, Fertilizer, Seed Variety</small>
+                            <strong>Core ML Features (75K samples)</strong><br>
+                            <small>All weather, soil, and management features - fully trained</small>
                         </div>
                     </div>
                     <div class="legend-item partial-field">
                         <span class="status-dot partial"></span>
                         <div>
-                            <strong>Partial Data (800-2300 samples)</strong><br>
-                            <small>Nitrogen, Phosphorus, Potassium, Soil Humidity - values often imputed</small>
+                            <strong>Encoded Categorical Features</strong><br>
+                            <small>Crop (22 types), State (20), Season (4), Soil Type (8), Irrigation (7), Seed (5)</small>
                         </div>
                     </div>
                     <div class="legend-item contextual-field">
                         <span class="status-dot contextual"></span>
                         <div>
-                            <strong>Contextual Only (No training data)</strong><br>
-                            <small>Crop, State, District, Season, Farm Area, Coordinates, Dates - for display & future use</small>
+                            <strong>Contextual Display Fields</strong><br>
+                            <small>District, Farm Area, Coordinates, Dates - for display & production calculations</small>
                         </div>
                     </div>
                 </div>
@@ -109,67 +109,117 @@
                             <div class="form-group good-data-field">
                                 <label for="Sunshine_hours">
                                     <span class="label-icon">☀️</span>
-                                    Sunshine Hours <span class="data-indicator good" title="4000 samples">●</span>
+                                    Sunshine Hours <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
                                 <input type="number" id="Sunshine_hours" name="Sunshine_hours" 
-                                       placeholder="e.g., 100" min="0" max="200" step="0.1">
-                                <span class="hint">Daily sunshine hours (0-200)</span>
+                                       placeholder="e.g., 7" min="0" max="14" step="0.1">
+                                <span class="hint">Daily sunshine hours (4-10)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="GDD">
+                                    <span class="label-icon">🌡️</span>
+                                    Growing Degree Days <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="GDD" name="GDD" 
+                                       placeholder="e.g., 1800" min="0" max="6000" step="1">
+                                <span class="hint">GDD accumulation (0-5000)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Pressure_KPa">
+                                    <span class="label-icon">💨</span>
+                                    Pressure (KPa) <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="Pressure_KPa" name="Pressure_KPa" 
+                                       placeholder="e.g., 101" min="95" max="105" step="0.1">
+                                <span class="hint">Atmospheric pressure (99-103)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Wind_Speed_Kmh">
+                                    <span class="label-icon">🌬️</span>
+                                    Wind Speed (km/h) <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="Wind_Speed_Kmh" name="Wind_Speed_Kmh" 
+                                       placeholder="e.g., 18" min="0" max="50" step="0.1">
+                                <span class="hint">Average wind speed (5-30)</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Soil Parameters - MIXED: Good + Partial Data -->
+                    <!-- Soil Parameters - All 75K samples -->
                     <div class="form-group-container ml-active-section" data-field-type="active">
                         <h3 class="group-title">🌱 Soil Properties <span class="field-badge active">✓ ML Active</span></h3>
                         <div class="form-grid">
                             <div class="form-group good-data-field">
+                                <label for="Soil_pH">
+                                    <span class="label-icon">🧪</span>
+                                    Soil pH <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="Soil_pH" name="Soil_pH" 
+                                       placeholder="e.g., 6.8" min="4" max="10" step="0.1">
+                                <span class="hint">pH value (4.5-9.0)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
                                 <label for="Soil_Quality">
                                     <span class="label-icon">🏔️</span>
-                                    Soil Quality <span class="data-indicator good">●</span>
+                                    Soil Quality <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
                                 <input type="number" id="Soil_Quality" name="Soil_Quality" 
-                                       placeholder="e.g., 75" min="0" max="100" step="0.1">
-                                <span class="hint">Quality index (0-100)</span>
+                                       placeholder="e.g., 70" min="0" max="100" step="0.1">
+                                <span class="hint">Quality index (40-100)</span>
                             </div>
                             
-                            <div class="form-group partial-data-field">
-                                <label for="Soil_Humidity">
-                                    <span class="label-icon">💦</span>
-                                    Soil Humidity <span class="data-indicator partial" title="800 samples - often imputed">●</span>
+                            <div class="form-group good-data-field">
+                                <label for="OrganicCarbon">
+                                    <span class="label-icon">🌿</span>
+                                    Organic Carbon <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
-                                <input type="number" id="Soil_Humidity" name="Soil_Humidity" 
-                                       placeholder="e.g., 60" min="0" max="100" step="0.1">
-                                <span class="hint">Moisture content (0-100)</span>
+                                <input type="number" id="OrganicCarbon" name="OrganicCarbon" 
+                                       placeholder="e.g., 1.4" min="0" max="5" step="0.1">
+                                <span class="hint">Organic carbon % (0.3-2.5)</span>
                             </div>
                             
-                            <div class="form-group partial-data-field">
+                            <div class="form-group good-data-field">
+                                <label for="Soil_Moisture">
+                                    <span class="label-icon">💦</span>
+                                    Soil Moisture <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="Soil_Moisture" name="Soil_Moisture" 
+                                       placeholder="e.g., 50" min="0" max="100" step="0.1">
+                                <span class="hint">Moisture content (20-80%)</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
                                 <label for="Nitrogen">
                                     <span class="label-icon">🧪</span>
-                                    Nitrogen (N) <span class="data-indicator partial" title="2299 samples">●</span>
+                                    Nitrogen (N) <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
                                 <input type="number" id="Nitrogen" name="Nitrogen" 
-                                       placeholder="e.g., 40" min="0" max="200" step="0.1">
-                                <span class="hint">Nitrogen content (0-200)</span>
+                                       placeholder="e.g., 90" min="0" max="350" step="0.1">
+                                <span class="hint">Nitrogen content (10-300)</span>
                             </div>
                             
-                            <div class="form-group partial-data-field">
+                            <div class="form-group good-data-field">
                                 <label for="Phosphorus">
                                     <span class="label-icon">🧪</span>
-                                    Phosphorus (P) <span class="data-indicator partial" title="2299 samples">●</span>
+                                    Phosphorus (P) <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
                                 <input type="number" id="Phosphorus" name="Phosphorus" 
-                                       placeholder="e.g., 50" min="0" max="200" step="0.1">
-                                <span class="hint">Phosphorus content (0-200)</span>
+                                       placeholder="e.g., 60" min="0" max="200" step="0.1">
+                                <span class="hint">Phosphorus content (10-170)</span>
                             </div>
                             
-                            <div class="form-group partial-data-field">
+                            <div class="form-group good-data-field">
                                 <label for="Potassium">
                                     <span class="label-icon">🧪</span>
-                                    Potassium (K) <span class="data-indicator partial" title="2299 samples">●</span>
+                                    Potassium (K) <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
                                 <input type="number" id="Potassium" name="Potassium" 
-                                       placeholder="e.g., 30" min="0" max="300" step="0.1">
-                                <span class="hint">Potassium content (0-300)</span>
+                                       placeholder="e.g., 65" min="0" max="500" step="0.1">
+                                <span class="hint">Potassium content (10-450)</span>
                             </div>
                         </div>
                     </div>
@@ -190,49 +240,73 @@
                             </div>
                             
                             <div class="form-group good-data-field">
-                                <label for="Irrigation_Schedule">
-                                    <span class="label-icon">🚿</span>
-                                    Irrigation Schedule <span class="data-indicator good" title="4000 samples">●</span>
+                                <label for="irrigation_type">
+                                    <span class="label-icon">💧</span>
+                                    Irrigation Type <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
-                                <select id="Irrigation_Schedule" name="Irrigation_Schedule">
-                                    <option value="">Select frequency</option>
-                                    <option value="0">None (Rainfed)</option>
-                                    <option value="1">Weekly</option>
-                                    <option value="2">Bi-weekly</option>
-                                    <option value="3">Every 3 days</option>
-                                    <option value="4">Every 4 days</option>
-                                    <option value="5">Every 5 days</option>
-                                    <option value="6">Every 6 days</option>
-                                    <option value="7">Daily</option>
-                                    <option value="8">Twice daily</option>
-                                    <option value="9">Drip irrigation</option>
-                                    <option value="10">Sprinkler system</option>
+                                <select id="irrigation_type" name="irrigation_type">
+                                    <option value="">Select type</option>
+                                    <option value="Canal">Canal</option>
+                                    <option value="Tubewell">Tubewell</option>
+                                    <option value="Tank">Tank</option>
+                                    <option value="Drip">Drip Irrigation</option>
+                                    <option value="Sprinkler">Sprinkler</option>
+                                    <option value="Rainfed">Rainfed</option>
+                                    <option value="Flood">Flood Irrigation</option>
                                 </select>
-                                <span class="hint">Irrigation frequency</span>
+                                <span class="hint">Type of irrigation system</span>
                             </div>
                             
                             <div class="form-group good-data-field">
-                                <label for="Seed_Variety">
-                                    <span class="label-icon">🌰</span>
-                                    Seed Variety <span class="data-indicator good" title="4000 samples">●</span>
+                                <label for="seed_variety">
+                                    <span class="label-icon">🌱</span>
+                                    Seed Variety <span class="data-indicator good" title="75K samples">●</span>
                                 </label>
-                                <select id="Seed_Variety" name="Seed_Variety">
+                                <select id="seed_variety" name="seed_variety">
                                     <option value="">Select variety</option>
-                                    <option value="0">Standard</option>
-                                    <option value="1">Hybrid</option>
-                                    <option value="2">High-yield</option>
-                                    <option value="3">Drought-resistant</option>
-                                    <option value="4">Disease-resistant</option>
-                                    <option value="5">Organic</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="HYV">High Yielding Variety (HYV)</option>
+                                    <option value="Traditional">Traditional</option>
+                                    <option value="Organic">Organic</option>
+                                    <option value="GM">Genetically Modified</option>
                                 </select>
                                 <span class="hint">Type of seed variety</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="soil_type">
+                                    <span class="label-icon">🏜️</span>
+                                    Soil Type <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <select id="soil_type" name="soil_type">
+                                    <option value="">Select soil type</option>
+                                    <option value="Alluvial">Alluvial</option>
+                                    <option value="Black">Black (Regur)</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Laterite">Laterite</option>
+                                    <option value="Desert">Desert (Arid)</option>
+                                    <option value="Mountain">Mountain</option>
+                                    <option value="Saline">Saline</option>
+                                    <option value="Peaty">Peaty/Marshy</option>
+                                </select>
+                                <span class="hint">Type of soil in field</span>
+                            </div>
+                            
+                            <div class="form-group good-data-field">
+                                <label for="Crop_Price">
+                                    <span class="label-icon">💰</span>
+                                    Crop Price (₹/unit) <span class="data-indicator good" title="75K samples">●</span>
+                                </label>
+                                <input type="number" id="Crop_Price" name="Crop_Price" 
+                                       placeholder="e.g., 2000" min="100" max="50000" step="1">
+                                <span class="hint">Market price per unit (100-50000)</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Crop & Location Section - CONTEXTUAL (for display & future model) -->
-                    <div class="form-group-container highlight-section contextual-section" data-field-type="contextual">
-                        <h3 class="group-title">🌾 Crop & Location <span class="field-badge contextual">📋 Contextual</span></h3>
+                    <!-- Crop & Location Section - Now ML ACTIVE -->
+                    <div class="form-group-container highlight-section ml-active-section" data-field-type="active">
+                        <h3 class="group-title">🌾 Crop & Location <span class="field-badge active">✓ ML Active</span></h3>
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="crop_type">
@@ -244,16 +318,25 @@
                                     <option value="Rice">Rice</option>
                                     <option value="Wheat">Wheat</option>
                                     <option value="Maize">Maize</option>
-                                    <option value="Bajra">Bajra (Pearl Millet)</option>
-                                    <option value="Jowar">Jowar (Sorghum)</option>
-                                    <option value="Pulses">Pulses</option>
-                                    <option value="Soybean">Soybean</option>
-                                    <option value="Groundnut">Groundnut</option>
                                     <option value="Cotton">Cotton</option>
                                     <option value="Sugarcane">Sugarcane</option>
-                                    <option value="Oilseeds">Oilseeds</option>
-                                    <option value="Vegetables">Vegetables</option>
-                                    <option value="Others">Others</option>
+                                    <option value="Soybean">Soybean</option>
+                                    <option value="Groundnut">Groundnut</option>
+                                    <option value="Mustard">Mustard</option>
+                                    <option value="Chickpea">Chickpea</option>
+                                    <option value="Pigeon Pea">Pigeon Pea</option>
+                                    <option value="Lentil">Lentil</option>
+                                    <option value="Sunflower">Sunflower</option>
+                                    <option value="Potato">Potato</option>
+                                    <option value="Onion">Onion</option>
+                                    <option value="Tomato">Tomato</option>
+                                    <option value="Banana">Banana</option>
+                                    <option value="Mango">Mango</option>
+                                    <option value="Grapes">Grapes</option>
+                                    <option value="Tea">Tea</option>
+                                    <option value="Coffee">Coffee</option>
+                                    <option value="Jute">Jute</option>
+                                    <option value="Tobacco">Tobacco</option>
                                 </select>
                                 <span class="hint">Type of crop being cultivated</span>
                             </div>
@@ -266,10 +349,12 @@
                                 <select id="state" name="state" required>
                                     <option value="">Select state</option>
                                     <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Assam">Assam</option>
                                     <option value="Bihar">Bihar</option>
                                     <option value="Chhattisgarh">Chhattisgarh</option>
                                     <option value="Gujarat">Gujarat</option>
                                     <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
                                     <option value="Jharkhand">Jharkhand</option>
                                     <option value="Karnataka">Karnataka</option>
                                     <option value="Kerala">Kerala</option>
@@ -281,8 +366,8 @@
                                     <option value="Tamil Nadu">Tamil Nadu</option>
                                     <option value="Telangana">Telangana</option>
                                     <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
                                     <option value="West Bengal">West Bengal</option>
-                                    <option value="Other">Other</option>
                                 </select>
                                 <span class="hint">State where crop is grown</span>
                             </div>
@@ -306,7 +391,7 @@
                                     <option value="">Select season</option>
                                     <option value="Kharif">Kharif (Monsoon: Jun-Oct)</option>
                                     <option value="Rabi">Rabi (Winter: Nov-Mar)</option>
-                                    <option value="Zaid">Zaid (Summer: Mar-Jun)</option>
+                                    <option value="Summer">Summer (Mar-Jun)</option>
                                     <option value="Annual">Annual/Perennial</option>
                                 </select>
                                 <span class="hint">Growing season</span>
@@ -470,6 +555,7 @@
             <section class="info-section">
                 <div class="section-header">
                     <h2>ℹ️ Model Information</h2>
+                    <p>Trained on 75,000 synthetic crop records</p>
                 </div>
                 <div class="info-cards">
                     <div class="info-card">
@@ -483,21 +569,35 @@
                         <div class="info-icon">📊</div>
                         <div class="info-content">
                             <h4>R² Score</h4>
-                            <p id="r2Score">0.9750</p>
+                            <p id="r2Score">0.9627</p>
                         </div>
                     </div>
                     <div class="info-card">
                         <div class="info-icon">📉</div>
                         <div class="info-content">
                             <h4>MAE</h4>
-                            <p id="maeScore">37.72 kg/ha</p>
+                            <p id="maeScore">1,610 kg/ha</p>
                         </div>
                     </div>
                     <div class="info-card">
                         <div class="info-icon">📏</div>
                         <div class="info-content">
                             <h4>RMSE</h4>
-                            <p id="rmseScore">52.20 kg/ha</p>
+                            <p id="rmseScore">3,574 kg/ha</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🌾</div>
+                        <div class="info-content">
+                            <h4>Crops</h4>
+                            <p>22 types</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🗺️</div>
+                        <div class="info-content">
+                            <h4>States</h4>
+                            <p>20 Indian states</p>
                         </div>
                     </div>
                 </div>

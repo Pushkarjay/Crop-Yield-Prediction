@@ -35,8 +35,8 @@ This project implements an end-to-end machine learning pipeline for predicting c
 
 ### Key Highlights
 
-- 📊 **7,109 samples** from 3 unified datasets
-- 🤖 **97.5% accuracy** (R² Score) with Gradient Boosting
+- 📊 **75,000 samples** synthetic dataset with 22 crops across 20 Indian states
+- 🤖 **96.27% accuracy** (R² Score) with Gradient Boosting
 - 🌐 **REST API** for seamless integration
 - 📱 **Responsive Dashboard** with real-time predictions
 - 📈 **Multi-crop comparison** feature
@@ -87,10 +87,10 @@ Crop-Yield-Prediction/
 ## ✨ Features
 
 ### 🌡️ Prediction Inputs
-- **Weather**: Rainfall, Temperature, Humidity, Sunshine hours
-- **Soil**: Quality, Humidity, N-P-K nutrients
-- **Management**: Fertilizer amount, Irrigation schedule, Seed variety
-- **Location**: State, District, Crop type (contextual)
+- **Weather**: Rainfall, Temperature, Humidity, Sunshine hours, GDD, Pressure, Wind Speed
+- **Soil**: Quality, pH, Organic Carbon, Soil Moisture, N-P-K nutrients
+- **Management**: Fertilizer amount, Irrigation type, Seed variety, Pesticide usage
+- **Location**: State, Crop type, Year, Crop price
 
 ### 📊 Dashboard Features
 - Real-time yield predictions

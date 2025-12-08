@@ -14,28 +14,35 @@ const loadingOverlay = document.getElementById('loadingOverlay');
 const resetBtn = document.getElementById('resetBtn');
 const sampleBtn = document.getElementById('sampleBtn');
 
-// Feature List (must match API expectations)
+// Feature List (must match API expectations - 75K Synthetic Dataset)
 const FEATURES = [
     'Rainfall_mm',
     'Temperature_C',
     'Humidity',
+    'Sunshine_hours',
+    'GDD',
+    'Pressure_KPa',
+    'Wind_Speed_Kmh',
+    'Soil_pH',
     'Soil_Quality',
+    'OrganicCarbon',
     'Nitrogen',
     'Phosphorus',
     'Potassium',
+    'Soil_Moisture',
     'Fertilizer_Amount_kg_per_hectare',
-    'Sunshine_hours',
-    'Soil_Humidity',
-    'Irrigation_Schedule',
-    'Seed_Variety'
+    'Crop_Price'
 ];
 
-// NEW: Additional fields for enhanced prediction
+// Additional fields for enhanced prediction (75K Synthetic Dataset)
 const EXTRA_FIELDS = [
     'crop_type',
     'state', 
     'district',
     'season',
+    'soil_type',
+    'irrigation_type',
+    'seed_variety',
     'agro_climatic_zone',
     'farm_area',
     'farm_area_unit',
@@ -46,31 +53,41 @@ const EXTRA_FIELDS = [
     'expected_harvest_date'
 ];
 
-// Sample Data for Testing (Enhanced)
+// Sample Data for Testing (75K Synthetic Dataset Values)
 const SAMPLE_DATA = {
-    Rainfall_mm: 450,
-    Temperature_C: 28,
+    // Weather features
+    Rainfall_mm: 1000,
+    Temperature_C: 26,
     Humidity: 72,
-    Soil_Quality: 78,
-    Nitrogen: 45,
-    Phosphorus: 52,
-    Potassium: 38,
-    Fertilizer_Amount_kg_per_hectare: 165,
-    Sunshine_hours: 105,
-    Soil_Humidity: 55,
-    Irrigation_Schedule: 5,
-    Seed_Variety: 1,
-    // NEW: Enhanced sample data
+    Sunshine_hours: 7,
+    GDD: 1800,
+    Pressure_KPa: 101,
+    Wind_Speed_Kmh: 18,
+    // Soil features
+    Soil_pH: 6.8,
+    Soil_Quality: 70,
+    OrganicCarbon: 1.4,
+    Nitrogen: 90,
+    Phosphorus: 60,
+    Potassium: 65,
+    Soil_Moisture: 50,
+    // Management
+    Fertilizer_Amount_kg_per_hectare: 200,
+    Crop_Price: 2000,
+    // Categorical (now ML active)
     crop_type: 'Rice',
-    state: 'Bihar',
-    district: 'Patna',
+    state: 'Punjab',
+    district: 'Ludhiana',
     season: 'Kharif',
-    agro_climatic_zone: 'Middle Gangetic Plains',
+    soil_type: 'Alluvial',
+    irrigation_type: 'Canal',
+    seed_variety: 'Hybrid',
+    agro_climatic_zone: 'Trans-Gangetic Plains',
     farm_area: 2.5,
     farm_area_unit: 'Hectare',
-    latitude: 25.5941,
-    longitude: 85.1376,
-    elevation: 53
+    latitude: 30.9010,
+    longitude: 75.8573,
+    elevation: 247
 };
 
 // ============================================

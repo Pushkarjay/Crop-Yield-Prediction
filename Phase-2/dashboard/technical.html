@@ -551,6 +551,7 @@
                 <li><a href="#feature-engineering">Feature Engineering</a></li>
                 <li><a href="#model-training">Model Training</a></li>
                 <li><a href="#model-evaluation">Model Evaluation</a></li>
+                <li><a href="#outlier-analysis">Outlier Analysis</a></li>
                 <li><a href="#feature-importance">Feature Importance</a></li>
                 <li><a href="#api-reference">API Reference</a></li>
                 <li><a href="#deployment">Deployment</a></li>
@@ -1186,6 +1187,73 @@ print(f"R² Score: {r2:.4f}")   # 0.9627
 print(f"MAE: {mae:.2f}")       # 1610.29
 print(f"RMSE: {rmse:.2f}")     # 3573.78</code></pre>
                 </div>
+                
+                <h3>Prediction Analysis Visualization</h3>
+                <p>
+                    The scatter plot below shows actual vs predicted yields on the test set.
+                    Points close to the diagonal line indicate accurate predictions.
+                </p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="../plots/07_prediction_analysis.png" alt="Prediction Analysis" 
+                         style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                        <strong>Figure:</strong> Actual vs Predicted yield showing R² = 0.9627
+                    </p>
+                </div>
+            </section>
+
+            <!-- Outlier Analysis Section -->
+            <section id="outlier-analysis" class="section">
+                <h2>🔍 Outlier Analysis</h2>
+                <p>
+                    Before creating the synthetic dataset, extensive outlier analysis was performed on the 
+                    original heterogeneous datasets to understand data quality issues.
+                </p>
+                
+                <h3>Issues Identified in Original Data</h3>
+                <table class="tech-table">
+                    <tr>
+                        <th>Issue</th>
+                        <th>Affected Records</th>
+                        <th>Resolution</th>
+                    </tr>
+                    <tr>
+                        <td>Temperature &gt; 50°C (Fahrenheit values)</td>
+                        <td>~800 records</td>
+                        <td>Identified, led to synthetic data generation</td>
+                    </tr>
+                    <tr>
+                        <td>Missing Crop + Yield combinations</td>
+                        <td>All 7,109 records</td>
+                        <td>No row had both Crop AND Yield values</td>
+                    </tr>
+                    <tr>
+                        <td>Inconsistent feature coverage</td>
+                        <td>Variable</td>
+                        <td>11-99% coverage across features</td>
+                    </tr>
+                </table>
+                
+                <h3>Outlier Analysis Visualization</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="../plots/07_outlier_analysis.png" alt="Outlier Analysis" 
+                         style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                        <strong>Figure:</strong> Outlier detection analysis on original dataset
+                    </p>
+                </div>
+                
+                <h3>Decision: Synthetic Data Generation</h3>
+                <p>
+                    Due to the fundamental data quality issues (no record having both crop type AND yield),
+                    the decision was made to generate a synthetic dataset with:
+                </p>
+                <ul style="color: var(--text-secondary); line-height: 2;">
+                    <li>75,000 complete records with realistic correlations</li>
+                    <li>22 crop types with appropriate base yields</li>
+                    <li>20 Indian states with regional climate variations</li>
+                    <li>All features populated with domain-appropriate values</li>
+                </ul>
             </section>
 
             <!-- Feature Importance Section -->

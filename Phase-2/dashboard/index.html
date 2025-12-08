@@ -602,6 +602,32 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Model Analysis Section -->
+            <section class="info-section">
+                <div class="section-header">
+                    <h2>📈 Model Analysis</h2>
+                    <p>Prediction accuracy and data quality visualizations</p>
+                </div>
+                <div class="analysis-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="analysis-card" style="background: var(--card-background); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-md);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">🎯 Prediction Analysis</h4>
+                        <img src="../plots/07_prediction_analysis.png" alt="Prediction Analysis" 
+                             style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+                            Actual vs Predicted yields showing R² = 0.9627
+                        </p>
+                    </div>
+                    <div class="analysis-card" style="background: var(--card-background); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-md);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">🔍 Data Quality Analysis</h4>
+                        <img src="../plots/07_outlier_analysis.png" alt="Outlier Analysis" 
+                             style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+                            Outlier detection on original dataset before synthetic generation
+                        </p>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
